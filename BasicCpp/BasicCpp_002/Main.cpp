@@ -10,6 +10,7 @@ using std::string;
 
 int main()
 {
+	//v Presentation =================================================
 	string narratorName = "The Almighty";
 
 	cout << "Hello adventurer, I am " << narratorName << ".\nSounds cool right?" << endl;
