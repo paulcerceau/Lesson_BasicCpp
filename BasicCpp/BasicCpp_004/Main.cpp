@@ -56,7 +56,8 @@ int main()
 	// Get the last item...
 	cout << "But what is the last item?" << endl;
 
-	int lastItemIndex = smallBag->length() - 1;
+	size_t smallBagSize = sizeof(smallBag) / sizeof(smallBag[0]); // <--- Not very convenient...
+	int lastItemIndex = smallBagSize - 1;
 	cout << "Hun, it's a... " << smallBag[lastItemIndex] << "?" << endl;
 
 	// ...and replace it

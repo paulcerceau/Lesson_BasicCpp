@@ -52,14 +52,15 @@ int main()
 	// -- The small bag --
 	cout << "I imagine you didn't come empty handed. What did you bring?" << endl;
 
-	string smallBag[5]{ "Pen", "Apple", "Pineapple" }; // <--- string smallBag[5]{ "Pen", "Apple", "Pineapple", "", "" };
+	string smallBag[5]{ "Pen", "Apple", "Pineapple" };
 
 	cout << "The first item in your small bag is a " << smallBag[0] << " and the second one is a " << smallBag[1] << ". Okay, interesting!" << endl;
 
 	// Get the last item...
 	cout << "But what is the last item?" << endl;
 
-	int lastItemIndex = smallBag->length() - 1;
+	size_t smallBagSize = sizeof(smallBag) / sizeof(smallBag[0]);
+	int lastItemIndex = smallBagSize - 1;
 	cout << "Hun, it's a... " << smallBag[lastItemIndex] << "?" << endl;
 
 	// ...and replace it
