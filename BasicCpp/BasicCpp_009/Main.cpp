@@ -38,7 +38,7 @@ int main()
 	cout << separator << endl;
 
 	//v Simple rolls with a map and for loop ==========================
-// Create the abilities map
+	// Create the abilities map
 	map<string, int> abilities{
 		{ "Strength", 0 },
 		{ "Dexterity", 0 },
