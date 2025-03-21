@@ -74,8 +74,17 @@ void AddCoinsInLeakyPurse(vector<string> purse, int coinsToAdd)
 	}
 }
 
-// Add coins in a purse
-void AddCoinsInPurse(vector<string>& purse, int coinsToAdd)
+// Add coins in a purse using a pointer
+void AddCoinsInPursePtr(vector<string>* purse, int coinsToAdd)
+{
+	for (int i = 0; i < coinsToAdd; i++)
+	{
+		purse->push_back("Coin");
+	}
+}
+
+// Add coins in a purse using a reference
+void AddCoinsInPurseRef(vector<string>& purse, int coinsToAdd)
 {
 	for (int i = 0; i < coinsToAdd; i++)
 	{
@@ -239,7 +248,7 @@ int main()
 
 	cout << "That's not much. I'll add some more in a gesture of pure generosity, with no ulterior motive." << endl;
 
-	AddCoinsInLeakyPurse(purse, 5); // <--- I am different than the other AddCoinsInPurse function
+	AddCoinsInLeakyPurse(purse, 5);
 
 	cout << "Now there are " << purse.size() << " coins in your purse." << endl;
 	cout << "Wait... Where did the coins go?" << endl;
@@ -248,9 +257,20 @@ int main()
 
 	cout << "Yes okay, I might have tried to fool you there hehe. I promise I'll do it properly this time." << endl;
 
-	AddCoinsInPurse(purse, 5); // <--- I am different than the other AddCoinsInLeakyPurse function
+	AddCoinsInPurseRef(purse, 5);
 
 	cout << "There are now " << purse.size() << " coins in your purse." << endl;
+
+	JumpLine();
+
+	cout << "You know what? I'll add some more coins in your purse. Just because I like you." << endl;
+
+	vector<string>* pursePtr = nullptr;
+	pursePtr = &purse;
+
+	AddCoinsInPursePtr(pursePtr, 5);
+
+	cout << purse.size() << " coins should be more than enough, right?" << endl;
 
 	DrawCustomSeparator(separator);
 
