@@ -123,7 +123,7 @@ int main()
 	// -- The small bag --
 	cout << "I imagine you didn't come empty handed. What did you bring?" << endl;
 
-	string smallBag[5]{ "Pen", "Apple", "Dice", };
+	string smallBag[5]{ "Pen", "Apple", "Dice" };
 
 	size_t smallBagSize = sizeof(smallBag) / sizeof(smallBag[0]);
 
