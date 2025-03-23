@@ -136,6 +136,7 @@
   <ItemGroup>
     <ClInclude Include="Abilities.h" />
     <ClInclude Include="Character.h" />
+    <ClInclude Include="IDisplayable.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="Item.h" />
   </ItemGroup>
