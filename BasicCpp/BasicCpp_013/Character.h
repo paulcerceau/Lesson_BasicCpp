@@ -29,6 +29,9 @@ public:
 	void DisplayAbilities() const;
 
 	//v Health =======================================================
+	// Get the character's health
+	int GetHealth() const;
+
 	// Set the character's max health
 	void SetMaxHealth(int maxHealth);
 	// Get the character's max health

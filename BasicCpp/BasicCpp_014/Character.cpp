@@ -62,6 +62,11 @@ string Character::GetName() const
 	return mName;
 }
 
+int Character::GetHealth() const
+{
+	return mHealth;
+}
+
 int Character::GetMaxHealth() const
 {
 	return mMaxHealth;
