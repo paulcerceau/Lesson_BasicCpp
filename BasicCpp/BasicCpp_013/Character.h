@@ -64,13 +64,13 @@ private:
 	int RollAbility();
 
 private:
-	string m_name;
+	string mName;
 
-	map<string, int> m_abilities;
+	map<string, int> mAbilities;
 
-	int m_maxHealth;
-	int m_health;
+	int mMaxHealth;
+	int mHealth;
 
-	vector<string> m_inventory;
+	vector<string> mInventory;
 
 };
