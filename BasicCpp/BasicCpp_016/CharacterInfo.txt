@@ -1,0 +1,6 @@
+Character name: Player
+Character health: 100/100
+Character inventory: 
+	Apple
+	Wooden Sword
+	Iron sword
