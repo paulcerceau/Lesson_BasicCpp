@@ -14,7 +14,7 @@ int main()
 
 	Inventory playerInventory = player.GetInventory();
 	
-	Item apple{ "Apple" };
+	Item apple{ "Apple", "A simple apple", 1 };
 
 	playerInventory.AddItem(apple);
 	playerInventory.AddItem(apple);
