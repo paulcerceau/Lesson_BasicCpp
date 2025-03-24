@@ -47,5 +47,8 @@
     <ClInclude Include="IDisplayable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="AbilityName.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

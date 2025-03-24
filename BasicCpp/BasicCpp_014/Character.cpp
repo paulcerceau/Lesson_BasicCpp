@@ -6,137 +6,114 @@ using std::cout;
 using std::endl;
 using std::pair;
 using std::rand;
+using std::string;
 
+
+int Character::currentlyLiving = 0;
 
 Character::Character() :
-	m_name("John Doe"),
-	m_maxHealth(20)
+	mName{ "John Doe" },
+	mMaxHealth{ 20 }
 {
-	m_health = m_maxHealth;
-}
+	mHealth = mMaxHealth;
+
+	currentlyLiving++;
+} 
 
 Character::Character(string name, int maxHealth) :
-	m_name(name),
-	m_maxHealth(maxHealth),
-	m_health(maxHealth)
+	mName{ name },
+	mMaxHealth{ maxHealth },
+	mHealth{ maxHealth }
 {
+	currentlyLiving++;
 }
 
-Character::Character(string name, int maxHealth, vector<Item> inventory) :
-	m_name(name),
-	m_maxHealth(maxHealth),
-	m_health(maxHealth),
-	m_inventory(inventory)
+Character::Character(string name, int maxHealth, Inventory inventory) :
+	mName{ name },
+	mMaxHealth{ maxHealth },
+	mHealth{ maxHealth },
+	mInventory{ inventory }
 {
+	currentlyLiving++;
 }
 
 Character::~Character()
 {
+	currentlyLiving--;
 }
 
 Abilities Character::GetAbilities() const
 {
-	return m_abilities;
+	return mAbilities;
 }
 
 void Character::DisplayAbilities() const
 {
-	cout << "Abilities:" << endl;
-
-	for (const std::pair<string, int>& ability : m_abilities)
-	{
-		cout << "\t- " << ability.first << ": " << ability.second << endl;
-	}
+	mAbilities.Display();
 }
 
 void Character::SetName(string name)
 {
-	m_name = name;
+	mName = name;
 }
 
 string Character::GetName() const
 {
-	return m_name;
+	return mName;
 }
 
 int Character::GetMaxHealth() const
 {
-	return m_maxHealth;
+	return mMaxHealth;
 }
 
 void Character::SetMaxHealth(int maxHealth)
 {
-	m_maxHealth = maxHealth;
+	mMaxHealth = maxHealth;
 }
 
 void Character::ReceiveDamage(int damage)
 {
-	m_health -= damage;
+	mHealth -= damage;
 }
 
 void Character::ReceiveHeal(int heal)
 {
 	// The following line is a ternary operator. It is a short way to write an if-else statement
-	m_health = m_health + heal > m_maxHealth ? m_maxHealth : m_health + heal;
-
-	// This is the same as:
-	/*
-	if (m_health + heal > m_maxHealth)
-	{
-		m_health = m_maxHealth;
-	}
-	else
-	{
-		m_health += heal;
-	}
-	*/
-}
-
-void Character::AddToInventory(string item)
-{
-	m_inventory.push_back(item);
-}
-
-void Character::RemoveFromInventory(int index)
-{
-	if (index < 0 || index >= m_inventory.size())
-	{
-		cout << "Invalid index" << endl;
-		return;
-	}
-
-	m_inventory.erase(m_inventory.begin() + index);
+	mHealth = mHealth + heal > mMaxHealth ? mMaxHealth : mHealth + heal;
 }
 
 Inventory Character::GetInventory() const
 {
-	return m_inventory;
+	return mInventory;
+}
+
+void Character::AddItemToInventory(Item item)
+{
+	mInventory.AddItem(item);
+}
+
+void Character::RemoveItemByIndexFromInventory(int index)
+{
+	mInventory.RemoveItemByIndex(index);
+}
+
+void Character::RemoveItemByNameFromInventory(string name)
+{
+	mInventory.RemoveItemByName(name);
 }
 
 void Character::DisplayInventory() const
 {
-	if (m_inventory.empty())
-	{
-		cout << "Inventory is empty" << endl;
-		return;
-	}
-
-	int itemIndex = 0;
-
-	cout << "Inventory:" << endl;
-	for (const string& item : m_inventory)
-	{
-		cout << "\t" << itemIndex << "- " << item << endl;
-		itemIndex++;
-	}
+	mInventory.Display();
 }
 
 void Character::DisplayInfo() const
 {
 	cout << "\n---x---x---x---x---x---x---x---x---\n" << endl;
 
-	cout << m_name << "'s info:" << endl;
-	cout << "Health: " << m_health << "/" << m_maxHealth << endl;
+	cout << mName << "'s info:" << endl;
+	cout << "Health: " << mHealth << "/" << mMaxHealth << endl;
 	DisplayAbilities();
 	DisplayInventory();
 

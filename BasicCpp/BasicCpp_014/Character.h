@@ -1,4 +1,5 @@
 #pragma once
+
 #include <string>
 #include <vector>
 #include <map>
@@ -8,7 +9,6 @@
 #include "Item.h"
 
 using std::string;
-using std::vector;
 using std::map;
 
 
@@ -17,7 +17,7 @@ class Character
 public:
 	Character();
 	Character(string name, int maxHealth);
-	Character(string name, int maxHealth, vector<Item> inventory);
+	Character(string name, int maxHealth, Inventory inventory);
 	~Character();
 
 	//v Name =========================================================
@@ -48,6 +48,15 @@ public:
 	// Get the character's inventory
 	Inventory GetInventory() const;
 
+	// Add an item to the character's inventory
+	void AddItemToInventory(Item item);
+
+	// Remove an item to the character's inventory using its index
+	void RemoveItemByIndexFromInventory(int index);
+
+	// Add an item to the character's inventory using its name
+	void RemoveItemByNameFromInventory(std::string name);
+
 	// Display the character's inventory
 	void DisplayInventory() const;
 
@@ -55,13 +64,16 @@ public:
 	// Display the character's info
 	void DisplayInfo() const;
 
+public: 
+	static int currentlyLiving;
+
 private:
-	string m_name;
+	string mName;
 
-	int m_maxHealth;
-	int m_health;
+	int mMaxHealth;
+	int mHealth;
 
-	Abilities m_abilities;
-	Inventory m_inventory;
+	Abilities mAbilities;
+	Inventory mInventory;
 
 };

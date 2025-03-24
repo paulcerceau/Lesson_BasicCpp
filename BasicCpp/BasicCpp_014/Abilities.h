@@ -1,6 +1,7 @@
 #pragma once
 
 #include "IDisplayable.h"
+#include "AbilityName.h"
 
 #include <map>
 #include <string>
@@ -8,14 +9,6 @@
 using std::map;
 using std::string;
 
-
-enum class AbilityName
-{
-	Strength,
-	Dexterity,
-	Constitution,
-	Intelligence
-};
 
 class Abilities : public IDisplayable
 {
