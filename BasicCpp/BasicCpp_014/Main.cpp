@@ -6,8 +6,6 @@ using std::cout;
 using std::endl;
 
 
-
-
 int main()
 {
 	Character player("Player", 100);
