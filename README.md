@@ -1,4 +1,4 @@
-# C++ Basics: part 1
+# C++ Basics:
 
 Welcome to the **C++ Basics Workshop**! This project is designed to introduce you to the fundamental concepts of programming in C++.
 
