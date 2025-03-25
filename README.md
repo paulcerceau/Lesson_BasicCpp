@@ -6,7 +6,7 @@ During this workshop, we will cover everything from the basic syntax to writing 
 
 ## Overview
 
-This repository uses the context of a Dungeons & Dragons-inspired character creation to illustrate C++ concepts (described in a separate Powerpoint presentation, not available to the public) and help students learn the basics of C++ programming. 
+This repository uses the context of a Dungeons & Dragons-inspired character creation to illustrate C++ concepts (described in a separate Powerpoint presentation, not available to the public yet) and help students learn the basics of C++ programming. 
 As new concepts are discovered, students can directly see how they can be applied. The project grows as their knowledge expands.
 
 The material is aimed at beginners and includes:
