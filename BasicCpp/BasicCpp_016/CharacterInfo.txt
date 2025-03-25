@@ -1,6 +1,7 @@
-Character name: Player
-Character health: 100/100
-Character inventory: 
+Character's name: Player
+Character's health: 100/100
+Character's inventory: 
 	Apple
 	Wooden Sword
 	Iron sword
+Appending new text

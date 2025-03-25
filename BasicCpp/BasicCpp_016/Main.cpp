@@ -6,6 +6,7 @@
 using std::cout;
 using std::endl;
 using std::ifstream;
+using std::fstream;
 using std::ofstream;
 using std::string; 
 
@@ -78,6 +79,31 @@ int main()
 			cout << line << endl;
 		}
 		myFileRead.close();
+	}
+	else
+	{
+		cout << "Unable to open file." << endl;
+	}
+
+	//v Do both ======================================================
+	cout << separator;
+
+	fstream myFileReadWrite("CharacterInfo.txt", std::ios::in | std::ios::out | std::ios::app);
+
+	if (myFileReadWrite.is_open())
+	{
+		// Write file content
+		myFileReadWrite << "Appending new text" << endl;
+
+		// Read file content
+		myFileReadWrite.seekg(0, std::ios::beg);
+		string line;
+		while (getline(myFileReadWrite, line))
+		{
+			cout << line << endl;
+		}
+
+		myFileReadWrite.close();
 	}
 	else
 	{
