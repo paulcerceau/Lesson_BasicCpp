@@ -4,8 +4,6 @@
 using namespace std;
 
 int main() {
-
-
     cout << "Hello World" << endl;
 
     InitWindow(300, 300, "My first Raylib window!");
