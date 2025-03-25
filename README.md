@@ -4,10 +4,6 @@ Welcome to the **C++ Basics Workshop**! This project is designed to introduce yo
 
 During this workshop, we will cover everything from the basic syntax to writing simple programs, ensuring that you build a solid foundation in C++ programming. Whether you're new to programming or looking to refresh your skills, this project will guide you through the essential concepts of C++ in a hands-on, practical way.
 
-## Table of Contents
-- [Overview](#overview)
-- [Objectives](#objectives)
-
 ## Overview
 
 This repository uses the context of a Dungeons & Dragons-inspired character creation to illustrate C++ concepts (described in a separate Powerpoint presentation, not available to the public) and help students learn the basics of C++ programming. 
