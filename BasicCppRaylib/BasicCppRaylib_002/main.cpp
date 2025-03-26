@@ -17,28 +17,28 @@ typedef struct Ball {
 } Ball;
 
 //----------------------------------------------------------------------------------
-// Global Variables Declaration
+// Variables Declaration
 //----------------------------------------------------------------------------------
 
-static const int screenWidth = 800;
-static const int screenHeight = 450;
-static const char* windowName = "Basic C++ with Raylib";
+const int screenWidth = 800;
+const int screenHeight = 450;
+const char* windowName = "Basic C++ with Raylib";
 
-static Font font = { 0 };
+Font font = { 0 };
 
-static Ball ball = { 0 };
+Ball ball = { 0 };
 
-static vector<Vector2> hitPositions;
+vector<Vector2> hitPositions;
 
 //----------------------------------------------------------------------------------
-// Module Functions Declaration
+// Functions Declaration
 //----------------------------------------------------------------------------------
 
-static void InitGame();
-static void Update();
-static void UpdateDrawFrame();
-static void Draw();
-static void DrawUI();
+void InitGame();
+void Update();
+void UpdateDrawFrame();
+void Draw();
+void DrawUI();
 
 //----------------------------------------------------------------------------------
 // Main entry point
@@ -73,7 +73,7 @@ int main() {
 }
 
 //----------------------------------------------------------------------------------
-// Module Functions Definition
+// Functions Definition
 //----------------------------------------------------------------------------------
 
 void InitGame()
