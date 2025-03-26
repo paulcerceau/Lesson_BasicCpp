@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BasicCppRaylib_001", "Basic
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BasicCppRaylib_003", "BasicCppRaylib_003\BasicCppRaylib_003.vcxproj", "{6839C057-6B4D-4D62-A24C-A57718F7874B}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BasicCppRaylib_004", "BasicCppRaylib_004\BasicCppRaylib_004.vcxproj", "{D8559D03-79DD-4D0C-8016-08140E868B9A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -41,6 +43,14 @@ Global
 		{6839C057-6B4D-4D62-A24C-A57718F7874B}.Release|x64.Build.0 = Release|x64
 		{6839C057-6B4D-4D62-A24C-A57718F7874B}.Release|x86.ActiveCfg = Release|Win32
 		{6839C057-6B4D-4D62-A24C-A57718F7874B}.Release|x86.Build.0 = Release|Win32
+		{D8559D03-79DD-4D0C-8016-08140E868B9A}.Debug|x64.ActiveCfg = Debug|x64
+		{D8559D03-79DD-4D0C-8016-08140E868B9A}.Debug|x64.Build.0 = Debug|x64
+		{D8559D03-79DD-4D0C-8016-08140E868B9A}.Debug|x86.ActiveCfg = Debug|Win32
+		{D8559D03-79DD-4D0C-8016-08140E868B9A}.Debug|x86.Build.0 = Debug|Win32
+		{D8559D03-79DD-4D0C-8016-08140E868B9A}.Release|x64.ActiveCfg = Release|x64
+		{D8559D03-79DD-4D0C-8016-08140E868B9A}.Release|x64.Build.0 = Release|x64
+		{D8559D03-79DD-4D0C-8016-08140E868B9A}.Release|x86.ActiveCfg = Release|Win32
+		{D8559D03-79DD-4D0C-8016-08140E868B9A}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
