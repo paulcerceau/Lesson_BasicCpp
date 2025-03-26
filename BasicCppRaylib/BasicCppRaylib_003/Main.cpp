@@ -65,24 +65,24 @@ int main() {
     //v Initialization ===============================================
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_NAME);
 
-    InitAudioDevice();      // Initialize audio device
+    InitAudioDevice();
 
     InitGame();
 
-    SetTargetFPS(60);       // Set our game to run at 60 frames-per-second
+    SetTargetFPS(60);
 
     //^ Initialization ===============================================
     //v Main game loop ===============================================
-    while (!WindowShouldClose())    // Detect window close button or ESC key
+    while (!WindowShouldClose())
     {
         UpdateDrawFrame();
     }
 
     //^ Main game loop ===============================================
     //v De-Initialization ============================================
-    CloseAudioDevice();     // Close audio context
+    CloseAudioDevice();
 
-    CloseWindow();          // Close window and OpenGL context
+    CloseWindow();
 
     //^ De-Initialization ============================================
 
@@ -182,7 +182,7 @@ void Update()
             }
 
             //^ Ball =========================================================
-			//v Paddles =========================================================
+			//v Paddles ======================================================
 			// Left paddle movement
             if (IsKeyDown('W')) 
             {
@@ -196,6 +196,16 @@ void Update()
             {
                 leftPaddle.SetSpeed(Vector2{ 0.0f, leftPaddle.GetSpeed().y * PADDLE_DECELERATION_FACTOR });
             }
+
+            // Left paddle collisions
+			if (leftPaddle.GetPosition().y <= 0)
+			{
+				leftPaddle.SetPosition(Vector2{ leftPaddle.GetPosition().x, 0 });
+			}
+			else if (leftPaddle.GetPosition().y + leftPaddle.GetHeight() >= SCREEN_HEIGHT)
+			{
+				leftPaddle.SetPosition(Vector2{ leftPaddle.GetPosition().x, SCREEN_HEIGHT - leftPaddle.GetHeight() });
+			}
 
 			leftPaddle.Update();
 
@@ -213,7 +223,19 @@ void Update()
 				rightPaddle.SetSpeed(Vector2{ 0.0f, rightPaddle.GetSpeed().y * PADDLE_DECELERATION_FACTOR });
 			}
 
+			// Right paddle collisions
+			if (rightPaddle.GetPosition().y <= 0)
+			{
+				rightPaddle.SetPosition(Vector2{ rightPaddle.GetPosition().x, 0 });
+			}
+			else if (rightPaddle.GetPosition().y + rightPaddle.GetHeight() >= SCREEN_HEIGHT)
+			{
+				rightPaddle.SetPosition(Vector2{ rightPaddle.GetPosition().x, SCREEN_HEIGHT - rightPaddle.GetHeight() });
+			}
+
 			rightPaddle.Update();
+
+            //^ Paddles ======================================================
         }
     }
 }

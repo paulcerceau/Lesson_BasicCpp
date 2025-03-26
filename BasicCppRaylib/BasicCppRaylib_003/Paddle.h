@@ -12,6 +12,8 @@ public:
 	void Draw() const;
 
 	Rectangle GetPaddleRectangle() const;
+	float GetWidth() const;
+	float GetHeight() const;
 
 protected:
 	float mWidth;

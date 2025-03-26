@@ -34,3 +34,13 @@ Rectangle Paddle::GetPaddleRectangle() const
 {
 	return Rectangle{ mPosition.x, mPosition.y, mWidth, mHeight };
 }
+
+float Paddle::GetWidth() const
+{
+	return mWidth;
+}
+
+float Paddle::GetHeight() const
+{
+	return mHeight;
+}
