@@ -1,4 +1,5 @@
 #include "raylib.h"
+#include "Ball.h"
 
 #include <iostream>
 #include <vector>
@@ -9,39 +10,32 @@ using std::vector;
 // Types and Structures Definition
 //----------------------------------------------------------------------------------
 
-typedef struct Ball {
-    Vector2 position;
-    Vector2 speed;
-    int radius;
-    Color color;
-} Ball;
+
 
 //----------------------------------------------------------------------------------
-// Global Variables Declaration
+// Variables Declaration
 //----------------------------------------------------------------------------------
 
-static const int screenWidth = 800;
-static const int screenHeight = 450;
-static const char* windowName = "Basic C++ with Raylib";
+const int screenWidth = 800;
+const int screenHeight = 450;
+const char* windowName = "Basic C++ with Raylib";
 
-static Font font = { 0 };
+Font font = { 0 };
 
-static bool gameOver = false;
-static bool pause = false;
+bool gameOver = false;
+bool pause = false;
 
-static Ball ball = { 0 };
-
-static vector<Vector2> hitPositions;
+Ball ball;
 
 //----------------------------------------------------------------------------------
-// Module Functions Declaration
+// Functions Declaration
 //----------------------------------------------------------------------------------
 
-static void InitGame();
-static void Update();
-static void UpdateDrawFrame();
-static void Draw();
-static void DrawUI();
+void InitGame();
+void Update();
+void UpdateDrawFrame();
+void Draw();
+void DrawUI();
 
 //----------------------------------------------------------------------------------
 // Main entry point
@@ -76,7 +70,7 @@ int main() {
 }
 
 //----------------------------------------------------------------------------------
-// Module Functions Definition
+// Functions Definition
 //----------------------------------------------------------------------------------
 
 void InitGame()
@@ -85,12 +79,10 @@ void InitGame()
     font = LoadFont("../resources/fonts/alagard.png");
 
     // -- BALL --
-    ball.position = Vector2{ 50.0f, 50.0f };
-    ball.speed = Vector2{ 4.0f, 4.0f };
-    ball.radius = 20;
-    ball.color = DARKBLUE;
+    Vector2 startPosition{ 100.0f, 100.0f };
+    Vector2 speed{ 2.0f, 2.0f };
 
-    hitPositions.clear();
+    ball.Init(startPosition, speed, 10.0f, DARKPURPLE);
 
 }
 
@@ -120,37 +112,17 @@ void Update()
 
         if (!pause)
         {
-            // -- BALL --
-            // Move the ball
-            ball.position.x += ball.speed.x;
-            ball.position.y += ball.speed.y;
 
-            // Bounce the ball
-            if ((ball.position.x >= (screenWidth - ball.radius)) || (ball.position.x <= ball.radius))
-            {
-                ball.speed.x *= -1;
-
-                hitPositions.push_back(ball.position);
-            }
-            if ((ball.position.y >= (screenHeight - ball.radius)) || (ball.position.y <= ball.radius))
-            {
-                ball.speed.y *= -1;
-
-                hitPositions.push_back(ball.position);
-            }
         }
     }
 }
 
 void Draw()
 {
-    DrawCircle(ball.position.x, ball.position.y, ball.radius, ball.color);
+    ball.Draw();
 }
 
 void DrawUI()
 {
-    for (int i = 0; i < hitPositions.size(); i++)
-    {
-        DrawTextEx(font, "Boing", hitPositions[i], 20, 3, RED);
-    }
+
 }
