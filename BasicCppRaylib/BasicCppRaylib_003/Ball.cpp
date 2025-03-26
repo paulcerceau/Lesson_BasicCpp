@@ -26,3 +26,8 @@ void Ball::Draw() const
 {
 	DrawCircle(mPosition.x, mPosition.y, mRadius, mColor);
 }
+
+float Ball::GetRadius() const
+{
+	return mRadius;
+}

@@ -20,9 +20,9 @@ typedef struct Ball {
 // Variables Declaration
 //----------------------------------------------------------------------------------
 
-const int screenWidth = 800;
-const int screenHeight = 450;
-const char* windowName = "Basic C++ with Raylib";
+const int SCREEN_WIDTH = 800;
+const int SCREEN_HEIGHT = 450;
+const char* WINDOW_NAME = "Basic C++ with Raylib";
 
 Font font = { 0 };
 
@@ -38,7 +38,7 @@ void InitGame();
 void Update();
 void UpdateDrawFrame();
 void Draw();
-void DrawUI();
+void DrawBackgroundUI();
 
 //----------------------------------------------------------------------------------
 // Main entry point
@@ -46,7 +46,7 @@ void DrawUI();
 
 int main() {
     //v Initialization ===============================================
-    InitWindow(screenWidth, screenHeight, windowName);
+    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_NAME);
 
     InitAudioDevice();      // Initialize audio device
 
@@ -102,7 +102,7 @@ void UpdateDrawFrame()
     ClearBackground(SKYBLUE);
 
     Draw();
-    DrawUI();
+    DrawBackgroundUI();
 
     EndDrawing();
 
@@ -117,13 +117,13 @@ void Update()
 	ball.position.y += ball.speed.y;
 
 	// Bounce the ball
-    if ((ball.position.x >= (screenWidth - ball.radius)) || (ball.position.x <= ball.radius))
+    if ((ball.position.x >= (SCREEN_WIDTH - ball.radius)) || (ball.position.x <= ball.radius))
     {
         ball.speed.x *= -1;
 
 		hitPositions.push_back(ball.position);
     }
-    if ((ball.position.y >= (screenHeight - ball.radius)) || (ball.position.y <= ball.radius))
+    if ((ball.position.y >= (SCREEN_HEIGHT - ball.radius)) || (ball.position.y <= ball.radius))
     {
         ball.speed.y *= -1;
 
@@ -136,7 +136,7 @@ void Draw()
 	DrawCircle(ball.position.x, ball.position.y, ball.radius, ball.color);
 }
 
-void DrawUI()
+void DrawBackgroundUI()
 {
 	for (int i = 0; i < hitPositions.size(); i++)
 	{

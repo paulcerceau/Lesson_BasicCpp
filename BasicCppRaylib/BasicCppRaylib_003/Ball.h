@@ -9,7 +9,10 @@ public:
 	Ball(Vector2 position, Vector2 speed, float radius, Color color);
 
 	void Init(Vector2 position, Vector2 speed, float radius, Color color);
+
 	void Draw() const override;
+
+	float GetRadius() const;
 
 protected:
 	float mRadius;
