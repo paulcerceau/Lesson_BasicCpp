@@ -10,29 +10,6 @@
 
 using std::vector;
 
-//----------------------------------------------------------------------------------
-// Types and Structures Definition
-//----------------------------------------------------------------------------------
-
-
-//----------------------------------------------------------------------------------
-// Const Declaration
-//----------------------------------------------------------------------------------
-
-const int SCREEN_WIDTH = 800;
-const int SCREEN_HEIGHT = 450;
-const char* WINDOW_NAME = "Basic C++ with Raylib";
-
-const float BALL_X_OFFSET = 200.0f;
-const float BALL_BASE_SPEED = 4.0f;
-
-const float PADDLE_BASE_WIDTH = 10.0f;
-const float PADDLE_BASE_HEIGHT = 100.0f;
-const float PADDLE_MAX_SPEED = 6.0f;
-const float PADDLE_DECELERATION_FACTOR = 0.95f;
-
-const int WINNING_SCORE = 10;
-const float SCORE_TEXT_SIZE = 50.0f;
 
 //----------------------------------------------------------------------------------
 // Variables Declaration
@@ -161,15 +138,6 @@ void UpdateDrawFrame()
 
 void Update()
 {
-
-    //switch (sceneManager.GetCurrentState())
-    //{
-    //case SceneState::Menu:
-
-    //default:
-    //    break;
-    //}
-
 	if (sceneManager.GetCurrentState() == SceneState::Menu)
 	{
 		if (IsKeyPressed(KEY_ENTER))
