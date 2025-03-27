@@ -1,25 +1,24 @@
 #include "Ball.h"
 
+#include "Consts.h"
+
+
 Ball::Ball() :
 	MovingObject(),
 	mRadius{ 10.0f },
-	mColor{ DARKBLUE }
+	mColor{ BLUE }
 {
 
 }
 
-Ball::Ball(Vector2 position, Vector2 speed, float radius, Color color) :
-	MovingObject(position, speed),
-	mRadius{ radius },
-	mColor{ color }
+void Ball::Init()
 {
-}
+	Vector2 startPosition{ Consts::Window::WIDTH / 2.0f - Consts::Ball::X_OFFSET, Consts::Window::HEIGHT / 2.0f };
+	Vector2 speed{ Consts::Ball::BASE_SPEED, Consts::Ball::BASE_SPEED };
 
-void Ball::Init(Vector2 position, Vector2 speed, float radius, Color color)
-{
-	MovingObject::Init(position, speed);
-	mRadius = radius;
-	mColor = color;
+	MovingObject::Init(startPosition, speed);
+	mRadius = Consts::Ball::RADIUS;
+	mColor = Color{ Consts::Ball::COLOR[0], Consts::Ball::COLOR[1], Consts::Ball::COLOR[2], Consts::Ball::COLOR[3] };
 }
 
 void Ball::Draw() const

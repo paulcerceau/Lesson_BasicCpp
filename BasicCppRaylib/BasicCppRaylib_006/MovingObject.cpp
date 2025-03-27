@@ -37,11 +37,6 @@ void MovingObject::SetSpeed(Vector2 speed)
 	mSpeed = speed;
 }
 
-void MovingObject::SetMaxSpeed(float maxSpeed)
-{
-	mMaxSpeed = maxSpeed;
-}
-
 void MovingObject::Init(Vector2 position, Vector2 speed)
 {
 	mPosition = position;

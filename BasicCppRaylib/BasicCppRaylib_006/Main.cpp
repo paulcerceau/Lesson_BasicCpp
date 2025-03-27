@@ -1,6 +1,7 @@
 #include "raylib.h"
 
 #include "Ball.h"
+#include "Consts.h"
 #include "Paddle.h"
 #include "SceneManager.h"
 #include "Utilities.h"
@@ -52,7 +53,7 @@ void ScoreGoal(bool scoredByLeft);
 
 int main() {
     //v Initialization ===============================================
-    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_NAME);
+    InitWindow(Consts::Window::WIDTH, Consts::Window::HEIGHT, Consts::Window::NAME);
 
     InitAudioDevice();
 
@@ -96,21 +97,20 @@ void InitGame()
 void ResetGame()
 {
     // -- BALL --
-    Vector2 startPosition{ SCREEN_WIDTH / 2.0f - BALL_X_OFFSET, SCREEN_HEIGHT / 2.0f };
-    Vector2 speed{ BALL_BASE_SPEED, BALL_BASE_SPEED };
-
-    ball.Init(startPosition, speed, 10.0f, BLUE);
+    ball.Init();
 
     // -- PADDLES --
     Vector2 leftPaddlePosition{ 10.0f, 10.0f };
     Vector2 leftPaddleSpeed{ 0.0f, 0.0f };
+	PaddleInputs leftPaddleInputs{ 'W', 'S' };
 
-    leftPaddle.Init(leftPaddlePosition, leftPaddleSpeed, PADDLE_BASE_WIDTH, PADDLE_BASE_HEIGHT, DARKBLUE);
+    leftPaddle.Init(leftPaddlePosition, leftPaddleSpeed, leftPaddleInputs);
 
-    Vector2 rightpaddlePosition{ SCREEN_WIDTH - (10.0f + PADDLE_BASE_WIDTH), 10.0f };
+    Vector2 rightpaddlePosition{ Consts::Window::WIDTH - (10.0f + Consts::Paddle::BASE_WIDTH), 10.0f };
     Vector2 rightpaddleSpeed{ 0.0f, 0.0f };
+	PaddleInputs rightPaddleInputs{ KEY_UP, KEY_DOWN };
 
-    rightPaddle.Init(rightpaddlePosition, rightpaddleSpeed, PADDLE_BASE_WIDTH, PADDLE_BASE_HEIGHT, DARKBLUE);
+    rightPaddle.Init(rightpaddlePosition, rightpaddleSpeed, rightPaddleInputs);
 
     // -- SCORES --
     leftScore = 0;
@@ -138,168 +138,169 @@ void UpdateDrawFrame()
 
 void Update()
 {
-	if (sceneManager.GetCurrentState() == SceneState::Menu)
-	{
-		if (IsKeyPressed(KEY_ENTER))
-		{
-            ResetGame();
-			sceneManager.SetCurrentState(SceneState::TwoPlayersGamemode);
-		}
-	}
-	else if (sceneManager.GetCurrentState() == SceneState::TwoPlayersGamemode)
+    switch (sceneManager.GetCurrentState())
     {
-        if (IsKeyPressed('P')) 
+        case SceneState::Menu:
         {
-            pause = !pause;
+            if (IsKeyPressed(KEY_ENTER))
+            {
+                ResetGame();
+                sceneManager.SetCurrentState(SceneState::TwoPlayersGamemode);
+            }
+
+            break;
         }
-		else if (IsKeyPressed('M'))
-		{
-			sceneManager.SetCurrentState(SceneState::Menu);
-		}
-
-        if (!pause)
+        case SceneState::TwoPlayersGamemode:
         {
-            //v Ball =========================================================
-            ball.Update();
-
-            // Ball horizontal walls collision
-            if (ball.GetPosition().y >= SCREEN_HEIGHT || ball.GetPosition().y <= 0)
+            if (IsKeyPressed('P'))
             {
-                ball.SetSpeed(Vector2{ ball.GetSpeed().x, -ball.GetSpeed().y });
+                pause = !pause;
+            }
+            else if (IsKeyPressed('M'))
+            {
+                sceneManager.SetCurrentState(SceneState::Menu);
             }
 
-            // Ball paddle collision
-            if (CheckCollisionCircleRec(ball.GetPosition(), ball.GetRadius(), leftPaddle.GetPaddleRectangle()) ||
-                CheckCollisionCircleRec(ball.GetPosition(), ball.GetRadius(), rightPaddle.GetPaddleRectangle()))
+            if (!pause)
             {
-                ball.SetSpeed(Vector2{ -ball.GetSpeed().x, ball.GetSpeed().y });
+                //v Ball =========================================================
+                ball.Update();
+
+                // Ball horizontal walls collision
+                if (ball.GetPosition().y >= Consts::Window::HEIGHT || ball.GetPosition().y <= 0)
+                {
+                    ball.SetSpeed(Vector2{ ball.GetSpeed().x, -ball.GetSpeed().y });
+                }
+
+                // Ball paddle collision
+                if (CheckCollisionCircleRec(ball.GetPosition(), ball.GetRadius(), leftPaddle.GetPaddleRectangle()) ||
+                    CheckCollisionCircleRec(ball.GetPosition(), ball.GetRadius(), rightPaddle.GetPaddleRectangle()))
+                {
+                    ball.SetSpeed(Vector2{ -ball.GetSpeed().x, ball.GetSpeed().y });
+                }
+
+                // Ball out of vertical bounds
+                if (ball.GetPosition().x >= Consts::Window::WIDTH)
+                {
+                    ScoreGoal(true);
+                }
+                else if (ball.GetPosition().x <= 0)
+                {
+                    ScoreGoal(false);
+                }
+
+                //^ Ball =========================================================
+                //v Paddles ======================================================
+                // Left paddle movement
+                leftPaddle.ProcessInputs();
+
+                // Left paddle collisions
+                if (leftPaddle.GetPosition().y <= 0)
+                {
+                    leftPaddle.SetPosition(Vector2{ leftPaddle.GetPosition().x, 0 });
+                }
+                else if (leftPaddle.GetPosition().y + leftPaddle.GetHeight() >= Consts::Window::HEIGHT)
+                {
+                    leftPaddle.SetPosition(Vector2{ leftPaddle.GetPosition().x, Consts::Window::HEIGHT - leftPaddle.GetHeight() });
+                }
+
+                leftPaddle.Update();
+
+                // Right paddle movement
+                rightPaddle.ProcessInputs();
+
+                // Right paddle collisions
+                if (rightPaddle.GetPosition().y <= 0)
+                {
+                    rightPaddle.SetPosition(Vector2{ rightPaddle.GetPosition().x, 0 });
+                }
+                else if (rightPaddle.GetPosition().y + rightPaddle.GetHeight() >= Consts::Window::HEIGHT)
+                {
+                    rightPaddle.SetPosition(Vector2{ rightPaddle.GetPosition().x, Consts::Window::HEIGHT - rightPaddle.GetHeight() });
+                }
+
+                rightPaddle.Update();
+
+                //^ Paddles ======================================================
             }
 
-            // Ball out of vertical bounds
-            if (ball.GetPosition().x >= SCREEN_WIDTH)
+            break;
+        }
+        case SceneState::Score:
+        {
+            if (IsKeyPressed('M'))
             {
-				ScoreGoal(true);
+                sceneManager.SetCurrentState(SceneState::Menu);
             }
-            else if (ball.GetPosition().x <= 0)
+            else if (IsKeyPressed(KEY_ENTER) || IsKeyPressed(KEY_SPACE))
             {
-				ScoreGoal(false);
-            }
-
-            //^ Ball =========================================================
-            //v Paddles ======================================================
-            // Left paddle movement
-            if (IsKeyDown('W'))
-            {
-                leftPaddle.SetSpeed(Vector2{ 0.0f, -PADDLE_MAX_SPEED });
-            }
-            else if (IsKeyDown('S'))
-            {
-                leftPaddle.SetSpeed(Vector2{ 0.0f, PADDLE_MAX_SPEED });
-            }
-            else
-            {
-                leftPaddle.SetSpeed(Vector2{ 0.0f, leftPaddle.GetSpeed().y * PADDLE_DECELERATION_FACTOR });
+                ResetGame();
+                sceneManager.SetCurrentState(SceneState::TwoPlayersGamemode);
             }
 
-            // Left paddle collisions
-            if (leftPaddle.GetPosition().y <= 0)
-            {
-                leftPaddle.SetPosition(Vector2{ leftPaddle.GetPosition().x, 0 });
-            }
-            else if (leftPaddle.GetPosition().y + leftPaddle.GetHeight() >= SCREEN_HEIGHT)
-            {
-                leftPaddle.SetPosition(Vector2{ leftPaddle.GetPosition().x, SCREEN_HEIGHT - leftPaddle.GetHeight() });
-            }
-
-            leftPaddle.Update();
-
-            // Right paddle movement
-            if (IsKeyDown(KEY_UP))
-            {
-                rightPaddle.SetSpeed(Vector2{ 0.0f, -PADDLE_MAX_SPEED });
-            }
-            else if (IsKeyDown(KEY_DOWN))
-            {
-                rightPaddle.SetSpeed(Vector2{ 0.0f, PADDLE_MAX_SPEED });
-            }
-            else
-            {
-                rightPaddle.SetSpeed(Vector2{ 0.0f, rightPaddle.GetSpeed().y * PADDLE_DECELERATION_FACTOR });
-            }
-
-            // Right paddle collisions
-            if (rightPaddle.GetPosition().y <= 0)
-            {
-                rightPaddle.SetPosition(Vector2{ rightPaddle.GetPosition().x, 0 });
-            }
-            else if (rightPaddle.GetPosition().y + rightPaddle.GetHeight() >= SCREEN_HEIGHT)
-            {
-                rightPaddle.SetPosition(Vector2{ rightPaddle.GetPosition().x, SCREEN_HEIGHT - rightPaddle.GetHeight() });
-            }
-
-            rightPaddle.Update();
-
-            //^ Paddles ======================================================
+            break;
         }
     }
-	else if (sceneManager.GetCurrentState() == SceneState::Score)
-	{
-        if (IsKeyPressed('M'))
-		{
-			sceneManager.SetCurrentState(SceneState::Menu);
-		}
-        else if (IsKeyPressed(KEY_ENTER) || IsKeyPressed(KEY_SPACE))
-        {
-			ResetGame();
-            sceneManager.SetCurrentState(SceneState::TwoPlayersGamemode);
-        }
-	}
 }
 
 void DrawBackgroundUI()
 {
-    if (sceneManager.GetCurrentState() == SceneState::Menu)
+    switch (sceneManager.GetCurrentState())
     {
-        const float screenVerticalMiddle = SCREEN_HEIGHT / 2.0f;
+        case SceneState::Menu:
+        {
+            const float screenVerticalMiddle = Consts::Window::HEIGHT / 2.0f;
 
-        Utils::DrawCenteredText("PONG", Vector2{ SCREEN_WIDTH / 2.0f, screenVerticalMiddle - 100.0f }, 50, WHITE);
-        Utils::DrawCenteredText("Press Enter to start", Vector2{ SCREEN_WIDTH / 2.0f, screenVerticalMiddle }, 20, WHITE);
-    }
-    else if (sceneManager.GetCurrentState() == SceneState::TwoPlayersGamemode)
-    {
-        const float textOffset = 50.0f;
+            Utils::DrawCenteredText("PONG", Vector2{ Consts::Window::WIDTH / 2.0f, screenVerticalMiddle - 100.0f }, 50, WHITE);
+            Utils::DrawCenteredText("Press Enter to start", Vector2{ Consts::Window::WIDTH / 2.0f, screenVerticalMiddle }, 20, WHITE);
 
-        Utils::DrawCenteredTextEx(font, TextFormat("%i", leftScore), Vector2{ SCREEN_WIDTH / 2.0f - textOffset, 50.0f }, SCORE_TEXT_SIZE, 0.0f, WHITE);
-        Utils::DrawCenteredTextEx(font, TextFormat("%i", rightScore), Vector2{ SCREEN_WIDTH / 2.0f + textOffset, 50.0f }, SCORE_TEXT_SIZE, 0.0f, WHITE);
-    }
-    else if (sceneManager.GetCurrentState() == SceneState::Score)
-    {
-        const float screenVerticalMiddle = SCREEN_HEIGHT / 2.0f;
-        const float textOffset = 50.0f;
+            break;
+        }
+        case SceneState::TwoPlayersGamemode:
+        {
+            const float textOffset = 50.0f;
 
-        Utils::DrawCenteredTextEx(font, TextFormat("%i", leftScore), Vector2{ SCREEN_WIDTH / 2.0f - textOffset, 50.0f }, SCORE_TEXT_SIZE, 0.0f, WHITE);
-        Utils::DrawCenteredTextEx(font, TextFormat("%i", rightScore), Vector2{ SCREEN_WIDTH / 2.0f + textOffset, 50.0f }, SCORE_TEXT_SIZE, 0.0f, WHITE);
+            Utils::DrawCenteredTextEx(font, TextFormat("%i", leftScore), Vector2{ Consts::Window::WIDTH / 2.0f - textOffset, 50.0f }, Consts::Score::TEXT_SIZE, 0.0f, WHITE);
+            Utils::DrawCenteredTextEx(font, TextFormat("%i", rightScore), Vector2{ Consts::Window::WIDTH / 2.0f + textOffset, 50.0f }, Consts::Score::TEXT_SIZE, 0.0f, WHITE);
 
-		const char* winnerText = leftScore >= WINNING_SCORE ? "Left player wins!" : "Right player wins!";
+            break;
+        }
+        case SceneState::Score:
+        {
+            const float screenVerticalMiddle = Consts::Window::HEIGHT / 2.0f;
+            const float textOffset = 50.0f;
 
-        Utils::DrawCenteredText(winnerText, Vector2{ SCREEN_WIDTH / 2.0f, screenVerticalMiddle }, 40, WHITE);
+            Utils::DrawCenteredTextEx(font, TextFormat("%i", leftScore), Vector2{ Consts::Window::WIDTH / 2.0f - textOffset, 50.0f }, Consts::Score::TEXT_SIZE, 0.0f, WHITE);
+            Utils::DrawCenteredTextEx(font, TextFormat("%i", rightScore), Vector2{ Consts::Window::WIDTH / 2.0f + textOffset, 50.0f }, Consts::Score::TEXT_SIZE, 0.0f, WHITE);
 
-        Utils::DrawCenteredText("Press Enter/Space to restart", Vector2{ SCREEN_WIDTH / 2.0f, screenVerticalMiddle + 100.0f }, 20, WHITE);
-        Utils::DrawCenteredText("Press M to go back to the main menu", Vector2{ SCREEN_WIDTH / 2.0f, screenVerticalMiddle + 125.0f }, 20, WHITE);
+            const char* winnerText = leftScore >= Consts::Score::WINNING_SCORE ? "Left player wins!" : "Right player wins!";
+
+            Utils::DrawCenteredText(winnerText, Vector2{ Consts::Window::WIDTH / 2.0f, screenVerticalMiddle }, 40, WHITE);
+
+            Utils::DrawCenteredText("Press Enter/Space to restart", Vector2{ Consts::Window::WIDTH / 2.0f, screenVerticalMiddle + 100.0f }, 20, WHITE);
+            Utils::DrawCenteredText("Press M to go back to the main menu", Vector2{ Consts::Window::WIDTH / 2.0f, screenVerticalMiddle + 125.0f }, 20, WHITE);
+
+            break;
+        }
     }
 }
 
 void Draw()
 {
-	if (sceneManager.GetCurrentState() == SceneState::TwoPlayersGamemode)
+    switch (sceneManager.GetCurrentState())
     {
-        // Draw middle separator
-        DrawRectangle(SCREEN_WIDTH / 2.0f, 0, 2, SCREEN_HEIGHT, WHITE);
+        case SceneState::TwoPlayersGamemode:
+        {
+            // Draw middle separator
+            DrawRectangle(Consts::Window::WIDTH / 2.0f, 0, 2, Consts::Window::HEIGHT, WHITE);
 
-        ball.Draw();
+            ball.Draw();
 
-        leftPaddle.Draw();
-        rightPaddle.Draw();
+            leftPaddle.Draw();
+            rightPaddle.Draw();
+
+            break;
+        }
     }
 }
 
@@ -314,10 +315,10 @@ void ScoreGoal(bool scoredByLeft)
         leftScore++;
 
         // Reset ball
-        ball.SetPosition(Vector2{ SCREEN_WIDTH / 2.0f - BALL_X_OFFSET, SCREEN_HEIGHT / 2.0f });
-        ball.SetSpeed(Vector2{ BALL_BASE_SPEED, BALL_BASE_SPEED });
+        ball.SetPosition(Vector2{ Consts::Window::WIDTH / 2.0f - Consts::Ball::X_OFFSET, Consts::Window::HEIGHT / 2.0f });
+        ball.SetSpeed(Vector2{ Consts::Ball::BASE_SPEED, Consts::Ball::BASE_SPEED });
 
-        if (leftScore >= WINNING_SCORE)
+        if (leftScore >= Consts::Score::WINNING_SCORE)
         {
             sceneManager.SetCurrentState(SceneState::Score);
         }
@@ -327,10 +328,10 @@ void ScoreGoal(bool scoredByLeft)
         rightScore++;
 
         // Reset ball
-        ball.SetPosition(Vector2{ SCREEN_WIDTH / 2.0f + BALL_X_OFFSET, SCREEN_HEIGHT / 2.0f });
-        ball.SetSpeed(Vector2{ -BALL_BASE_SPEED, BALL_BASE_SPEED });
+        ball.SetPosition(Vector2{ Consts::Window::WIDTH / 2.0f + Consts::Ball::X_OFFSET, Consts::Window::HEIGHT / 2.0f });
+        ball.SetSpeed(Vector2{ -Consts::Ball::BASE_SPEED, Consts::Ball::BASE_SPEED });
 
-        if (rightScore >= WINNING_SCORE)
+        if (rightScore >= Consts::Score::WINNING_SCORE)
         {
             sceneManager.SetCurrentState(SceneState::Score);
         }

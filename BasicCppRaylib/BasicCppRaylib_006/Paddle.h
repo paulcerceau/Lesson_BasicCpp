@@ -12,12 +12,11 @@ class Paddle : public MovingObject, public IRenderable
 {
 public:
 	Paddle();
-	Paddle(Vector2 position, Vector2 speed, float width, float height, Color color);
 
-	void Init(Vector2 position, Vector2 speed, float width, float height, Color color);
+	void Init(Vector2 position, Vector2 speed, PaddleInputs inputs);
 
 	inline void SetInputs(PaddleInputs inputs) { mInputs = inputs; }
-	void ManageInputs();
+	void ProcessInputs();
 
 	void Draw() const override;
 
@@ -29,8 +28,6 @@ protected:
 	float mWidth;
 	float mHeight;
 	Color mColor;
-
-	float mDecelerationFactor;
 
 	PaddleInputs mInputs;
 };

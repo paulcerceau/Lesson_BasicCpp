@@ -1,43 +1,39 @@
 #include "Paddle.h"
 
+#include "Consts.h"
+
+
 Paddle::Paddle() :
 	MovingObject{  },
 	mWidth{ 0.0f },
 	mHeight{ 0.0f },
-	mColor{ WHITE }
+	mColor{ WHITE },
+	mInputs{ PaddleInputs{ 265, 264 } }
 {
 }
 
-
-Paddle::Paddle(Vector2 position, Vector2 speed, float width, float height, Color color) :
-	MovingObject{ position, speed },
-	mWidth{ width },
-	mHeight{ height },
-	mColor{ color }
-{
-}
-
-void Paddle::Init(Vector2 position, Vector2 speed, float width, float height, Color color)
+void Paddle::Init(Vector2 position, Vector2 speed, PaddleInputs inputs)
 {
 	MovingObject::Init(position, speed);
-	mWidth = width;
-	mHeight = height;
-	mColor = color;
+	mInputs = inputs;
+	mWidth = Consts::Paddle::BASE_WIDTH;
+	mHeight = Consts::Paddle::BASE_HEIGHT;
+	mColor = Color{ Consts::Paddle::COLOR[0], Consts::Paddle::COLOR[1], Consts::Paddle::COLOR[2], Consts::Paddle::COLOR[3] };
 }
 
-void Paddle::ManageInputs()
+void Paddle::ProcessInputs()
 {
 	if (IsKeyDown(mInputs.upKey))
 	{
-		mSpeed = Vector2{ 0.0f, -mMaxSpeed };
+		mSpeed = Vector2{ 0.0f, -Consts::Paddle::MAX_SPEED };
 	}
 	else if (IsKeyDown(mInputs.downKey))
 	{
-		mSpeed = Vector2{ 0.0f, mMaxSpeed };
+		mSpeed = Vector2{ 0.0f, Consts::Paddle::MAX_SPEED };
 	}
 	else
 	{
-		leftPaddle.SetSpeed(Vector2{ 0.0f, leftPaddle.GetSpeed().y * PADDLE_DECELERATION_FACTOR });
+		mSpeed = Vector2{ 0.0f, mSpeed.y * Consts::Paddle::DECELERATION_FACTOR };
 	}
 }
 

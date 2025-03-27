@@ -4,28 +4,31 @@ namespace Consts
 {
 	namespace Window
 	{
-		const int WIDTH = 800;
-		const int HEIGHT = 450;
-		const char* NAME = "Basic C++ with Raylib";
+		extern const int WIDTH;
+		extern const int HEIGHT;
+		extern const char* NAME;
 	}
-	
+
 	namespace Ball
 	{
-		const float X_OFFSET = 200.0f;
-		const float BASE_SPEED = 4.0f;
+		extern const float RADIUS;
+		extern const unsigned char COLOR[4];
+		extern const float X_OFFSET;
+		extern const float BASE_SPEED;
 	}
-	
+
 	namespace Paddle
 	{
-		const float BASE_WIDTH = 10.0f;
-		const float BASE_HEIGHT = 100.0f;
-		const float MAX_SPEED = 6.0f;
-		const float DECELERATION_FACTOR = 0.95f;
+		extern const float BASE_WIDTH;
+		extern const float BASE_HEIGHT;
+		extern const unsigned char COLOR[4];
+		extern const float MAX_SPEED;
+		extern const float DECELERATION_FACTOR;
 	}
 
 	namespace Score
 	{
-		const int WINNING_SCORE = 10;
-		const float TEXT_SIZE = 50.0f;
+		extern const int WINNING_SCORE;
+		extern const float TEXT_SIZE;
 	}
 }
