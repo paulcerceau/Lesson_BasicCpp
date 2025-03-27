@@ -27,11 +27,11 @@ void Paddle::ProcessInputs()
 {
 	if (IsKeyDown(mInputs.upKey))
 	{
-		mSpeed = Vector2{ 0.0f, -Consts::Paddle::MAX_SPEED };
+		mSpeed = Vector2{ 0.0f, -Consts::Paddle::BASE_SPEED };
 	}
 	else if (IsKeyDown(mInputs.downKey))
 	{
-		mSpeed = Vector2{ 0.0f, Consts::Paddle::MAX_SPEED };
+		mSpeed = Vector2{ 0.0f, Consts::Paddle::BASE_SPEED };
 	}
 }
 

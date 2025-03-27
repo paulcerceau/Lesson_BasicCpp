@@ -164,20 +164,10 @@ void Update()
             if (!pause)
             {
                 //v Ball =========================================================
+				ball.HandlePaddleCollision(leftPaddle, true);
+				ball.HandlePaddleCollision(rightPaddle, false);
+                
                 ball.Update();
-
-                // Ball horizontal walls collision
-                if (ball.GetPosition().y >= Consts::Window::HEIGHT || ball.GetPosition().y <= 0)
-                {
-                    ball.SetSpeed(Vector2{ ball.GetSpeed().x, -ball.GetSpeed().y });
-                }
-
-                // Ball paddle collision
-                if (CheckCollisionCircleRec(ball.GetPosition(), ball.GetRadius(), leftPaddle.GetPaddleRectangle()) ||
-                    CheckCollisionCircleRec(ball.GetPosition(), ball.GetRadius(), rightPaddle.GetPaddleRectangle()))
-                {
-                    ball.SetSpeed(Vector2{ -ball.GetSpeed().x, ball.GetSpeed().y });
-                }
 
                 // Ball out of vertical bounds
                 if (ball.GetPosition().x >= Consts::Window::WIDTH)
@@ -292,7 +282,7 @@ void ScoreGoal(bool scoredByLeft)
 
         // Reset ball
         ball.SetPosition(Vector2{ Consts::Window::WIDTH / 2.0f - Consts::Ball::X_OFFSET, Consts::Window::HEIGHT / 2.0f });
-        ball.SetSpeed(Vector2{ Consts::Ball::BASE_SPEED, Consts::Ball::BASE_SPEED });
+        ball.SetDirectionAngleRad(PI / 4.0f);
 
         if (leftScore >= Consts::Score::WINNING_SCORE)
         {
@@ -305,7 +295,7 @@ void ScoreGoal(bool scoredByLeft)
 
         // Reset ball
         ball.SetPosition(Vector2{ Consts::Window::WIDTH / 2.0f + Consts::Ball::X_OFFSET, Consts::Window::HEIGHT / 2.0f });
-        ball.SetSpeed(Vector2{ -Consts::Ball::BASE_SPEED, Consts::Ball::BASE_SPEED });
+        ball.SetDirectionAngleRad(3 * PI / 4.0f);
 
         if (rightScore >= Consts::Score::WINNING_SCORE)
         {

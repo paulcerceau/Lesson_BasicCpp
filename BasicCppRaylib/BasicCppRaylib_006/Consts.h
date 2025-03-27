@@ -27,7 +27,7 @@ namespace Consts
 		extern const float BASE_WIDTH;
 		extern const float BASE_HEIGHT;
 		extern const unsigned char COLOR[4];
-		extern const float MAX_SPEED;
+		extern const float BASE_SPEED;
 		extern const float DECELERATION_FACTOR;
 	}
 
