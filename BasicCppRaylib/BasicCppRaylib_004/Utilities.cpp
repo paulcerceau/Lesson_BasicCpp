@@ -2,10 +2,10 @@
 
 namespace Utils
 {
-	void DrawCenteredText(const char* text, Vector2 position, int fontSize, Color color)
+	void DrawCenteredText(const char* text, int fontSize, Color color)
 	{
 		int textSize = MeasureText(text, fontSize);
-		Vector2 centeredPosition = { position.x - textSize / 2, position.y };
+		Vector2 centeredPosition = { GetScreenWidth() / 2 - textSize / 2, GetScreenHeight() / 2 };
 		DrawText(text, centeredPosition.x, centeredPosition.y, fontSize, color);
 	}
 

@@ -15,16 +15,19 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Ball.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MovingObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Ball.cpp">
+    <ClCompile Include="Paddle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Paddle.cpp">
+    <ClCompile Include="SceneManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Utilities.cpp">
@@ -32,16 +35,19 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MovingObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Ball.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="IRenderable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MovingObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Paddle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Utilities.h">

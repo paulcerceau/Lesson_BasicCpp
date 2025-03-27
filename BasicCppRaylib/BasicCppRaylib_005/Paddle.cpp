@@ -1,6 +1,6 @@
 #include "Paddle.h"
 
-Paddle::Paddle() : 
+Paddle::Paddle() :
 	MovingObject{  },
 	mWidth{ 0.0f },
 	mHeight{ 0.0f },

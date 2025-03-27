@@ -6,7 +6,7 @@ class Paddle : public MovingObject
 public:
 	Paddle();
 	Paddle(Vector2 position, Vector2 speed, float width, float height, Color color);
-
+	
 	void Init(Vector2 position, Vector2 speed, float width, float height, Color color);
 
 	void Draw() const;

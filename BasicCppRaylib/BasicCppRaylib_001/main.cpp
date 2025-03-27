@@ -9,9 +9,16 @@ int main() {
     InitWindow(300, 300, "My first Raylib window!");
     SetTargetFPS(60);
 
+    // Init
+
     while (!WindowShouldClose()) {
+        // Update
+
         BeginDrawing();
         ClearBackground(DARKGREEN);
+
+        // Draw
+
         EndDrawing();
     }
 
