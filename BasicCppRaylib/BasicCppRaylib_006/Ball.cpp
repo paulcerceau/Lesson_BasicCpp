@@ -6,23 +6,22 @@
 #include <cmath>
 
 Ball::Ball() :
-	MovingObject(),
+	BaseObject(),
 	mRadius{ 10.0f },
 	mColor{ BLUE },
+	mSpeed{ 0.0f, 0.0f },
 	mRadDirectionAngle{ 0.0f }
 {
-
 }
 
 void Ball::Init()
 {
-	Vector2 startPosition{ Consts::Window::WIDTH / 2.0f - Consts::Ball::X_OFFSET, Consts::Window::HEIGHT / 2.0f };
-	Vector2 speed{ Consts::Ball::BASE_SPEED, Consts::Ball::BASE_SPEED };
-
-	MovingObject::Init(startPosition, speed);
+	mPosition = Vector2{ Consts::Window::WIDTH / 2.0f - Consts::Ball::X_OFFSET, Consts::Window::HEIGHT / 2.0f };
 	mRadius = Consts::Ball::RADIUS;
 	mColor = Color{ Consts::Ball::COLOR[0], Consts::Ball::COLOR[1], Consts::Ball::COLOR[2], Consts::Ball::COLOR[3] };
+	
 	mRadDirectionAngle = PI / 4.0f;
+	mSpeed = Vector2{ Consts::Ball::BASE_SPEED * std::cos(mRadDirectionAngle), Consts::Ball::BASE_SPEED * std::sin(mRadDirectionAngle) };
 }
 
 void Ball::HandlePaddleCollision(const Paddle& paddle, bool bIsLeftPaddle)

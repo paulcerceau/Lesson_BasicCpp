@@ -1,6 +1,5 @@
 #pragma once
-#include "MovingObject.h"
-#include "IRenderable.h"
+#include "BaseObject.h"
 
 struct PaddleInputs
 {
@@ -8,7 +7,7 @@ struct PaddleInputs
 	int downKey;
 };
 
-class Paddle : public MovingObject, public IRenderable
+class Paddle : public BaseObject
 {
 public:
 	Paddle();
@@ -20,7 +19,7 @@ public:
 
 	void Update();
 
-	void Draw() const override;
+	void Draw() const;
 
 	Rectangle GetPaddleRectangle() const;
 	float GetWidth() const;
@@ -31,6 +30,8 @@ protected:
 	float mHeight;
 	Color mColor;
 
+	Vector2 mSpeed;
 	PaddleInputs mInputs;
+
 };
 

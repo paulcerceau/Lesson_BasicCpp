@@ -1,10 +1,9 @@
 #pragma once
-#include "MovingObject.h"
-#include "IRenderable.h"
+#include "BaseObject.h"
 
 class Paddle;
 
-class Ball : public MovingObject, public IRenderable
+class Ball : public BaseObject
 {
 public:
 	Ball();
@@ -25,6 +24,8 @@ public:
 protected:
 	float mRadius;
 	Color mColor;
+
+	Vector2 mSpeed;
 	float mRadDirectionAngle;
 
 };

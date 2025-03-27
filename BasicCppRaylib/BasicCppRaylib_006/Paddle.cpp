@@ -6,17 +6,19 @@
 
 
 Paddle::Paddle() :
-	MovingObject{  },
+	BaseObject{  },
 	mWidth{ 0.0f },
 	mHeight{ 0.0f },
 	mColor{ WHITE },
+	mSpeed{ 0.0f, 0.0f },
 	mInputs{ PaddleInputs{ 265, 264 } }
 {
 }
 
 void Paddle::Init(Vector2 position, Vector2 speed, PaddleInputs inputs)
 {
-	MovingObject::Init(position, speed);
+	mPosition = position;
+	mSpeed = speed;
 	mInputs = inputs;
 	mWidth = Consts::Paddle::BASE_WIDTH;
 	mHeight = Consts::Paddle::BASE_HEIGHT;
@@ -37,7 +39,8 @@ void Paddle::ProcessInputs()
 
 void Paddle::Update()
 {
-	MovingObject::Update();
+	mPosition.x += mSpeed.x;
+	mPosition.y += mSpeed.y;
 
 	//v Movement (must be last) ======================================
 	// Deceleration
