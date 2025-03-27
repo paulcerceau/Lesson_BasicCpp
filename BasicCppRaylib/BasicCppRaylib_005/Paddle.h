@@ -1,7 +1,8 @@
 #pragma once
 #include "MovingObject.h"
+#include "IRenderable.h"
 
-class Paddle : public MovingObject
+class Paddle : public MovingObject, public IRenderable
 {
 public:
 	Paddle();
@@ -9,7 +10,7 @@ public:
 
 	void Init(Vector2 position, Vector2 speed, float width, float height, Color color);
 
-	void Draw() const;
+	void Draw() const override;
 
 	Rectangle GetPaddleRectangle() const;
 	float GetWidth() const;
