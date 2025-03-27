@@ -1,5 +1,7 @@
 #include "Paddle.h"
 
+#include <cmath>
+
 #include "Consts.h"
 
 
@@ -31,10 +33,40 @@ void Paddle::ProcessInputs()
 	{
 		mSpeed = Vector2{ 0.0f, Consts::Paddle::MAX_SPEED };
 	}
-	else
+}
+
+void Paddle::Update()
+{
+	MovingObject::Update();
+
+	//v Movement (must be last) ======================================
+	// Deceleration
+	if (mSpeed.y == 0.0f)
 	{
-		mSpeed = Vector2{ 0.0f, mSpeed.y * Consts::Paddle::DECELERATION_FACTOR };
+		// No need to continue as the paddle is not moving
+		return; 
 	}
+    else if (std::abs(mSpeed.y) < Consts::Maths::EPSILON)
+    {
+		mSpeed.y = 0.0f;
+    }
+    else
+    {
+		mSpeed.y *= Consts::Paddle::DECELERATION_FACTOR;
+    }
+
+	// Check if the paddle is at the top or bottom of the screen and
+	// reset its position if that's the case
+	if (mPosition.y <= 0)
+	{
+		mPosition = Vector2{ mPosition.x, 0 };
+	}
+	else if (mPosition.y + mHeight >= Consts::Window::HEIGHT)
+	{
+		mPosition = Vector2{ mPosition.x, Consts::Window::HEIGHT - mHeight };
+	}
+
+	//^ Movement =====================================================
 }
 
 void Paddle::Draw() const

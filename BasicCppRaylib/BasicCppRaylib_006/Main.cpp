@@ -191,34 +191,10 @@ void Update()
 
                 //^ Ball =========================================================
                 //v Paddles ======================================================
-                // Left paddle movement
                 leftPaddle.ProcessInputs();
-
-                // Left paddle collisions
-                if (leftPaddle.GetPosition().y <= 0)
-                {
-                    leftPaddle.SetPosition(Vector2{ leftPaddle.GetPosition().x, 0 });
-                }
-                else if (leftPaddle.GetPosition().y + leftPaddle.GetHeight() >= Consts::Window::HEIGHT)
-                {
-                    leftPaddle.SetPosition(Vector2{ leftPaddle.GetPosition().x, Consts::Window::HEIGHT - leftPaddle.GetHeight() });
-                }
-
                 leftPaddle.Update();
 
-                // Right paddle movement
                 rightPaddle.ProcessInputs();
-
-                // Right paddle collisions
-                if (rightPaddle.GetPosition().y <= 0)
-                {
-                    rightPaddle.SetPosition(Vector2{ rightPaddle.GetPosition().x, 0 });
-                }
-                else if (rightPaddle.GetPosition().y + rightPaddle.GetHeight() >= Consts::Window::HEIGHT)
-                {
-                    rightPaddle.SetPosition(Vector2{ rightPaddle.GetPosition().x, Consts::Window::HEIGHT - rightPaddle.GetHeight() });
-                }
-
                 rightPaddle.Update();
 
                 //^ Paddles ======================================================

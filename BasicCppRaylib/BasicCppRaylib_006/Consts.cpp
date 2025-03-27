@@ -2,6 +2,11 @@
 
 namespace Consts
 {
+	namespace Maths
+	{
+		const float EPSILON{ 0.01f };
+	}
+
 	namespace Window
 	{
 		const int WIDTH{ 800 }; 

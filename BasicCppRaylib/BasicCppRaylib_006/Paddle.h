@@ -18,6 +18,8 @@ public:
 	inline void SetInputs(PaddleInputs inputs) { mInputs = inputs; }
 	void ProcessInputs();
 
+	void Update();
+
 	void Draw() const override;
 
 	Rectangle GetPaddleRectangle() const;

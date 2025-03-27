@@ -2,6 +2,11 @@
 
 namespace Consts
 {
+	namespace Maths
+	{
+		extern const float EPSILON;
+	}
+
 	namespace Window
 	{
 		extern const int WIDTH;
