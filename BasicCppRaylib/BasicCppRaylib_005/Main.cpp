@@ -161,177 +161,188 @@ void UpdateDrawFrame()
 
 void Update()
 {
-
-    //switch (sceneManager.GetCurrentState())
-    //{
-    //case SceneState::Menu:
-
-    //default:
-    //    break;
-    //}
-
-	if (sceneManager.GetCurrentState() == SceneState::Menu)
-	{
-		if (IsKeyPressed(KEY_ENTER))
-		{
-            ResetGame();
-			sceneManager.SetCurrentState(SceneState::TwoPlayersGamemode);
-		}
-	}
-	else if (sceneManager.GetCurrentState() == SceneState::TwoPlayersGamemode)
+    switch (sceneManager.GetCurrentState())
     {
-        if (IsKeyPressed('P')) 
+        case SceneState::Menu:
         {
-            pause = !pause;
+            if (IsKeyPressed(KEY_ENTER))
+            {
+                ResetGame();
+                sceneManager.SetCurrentState(SceneState::TwoPlayersGamemode);
+            }
+            break;
         }
-		else if (IsKeyPressed('M'))
-		{
-			sceneManager.SetCurrentState(SceneState::Menu);
-		}
-
-        if (!pause)
+        case SceneState::TwoPlayersGamemode:
         {
-            //v Ball =========================================================
-            ball.Update();
-
-            // Ball horizontal walls collision
-            if (ball.GetPosition().y >= SCREEN_HEIGHT || ball.GetPosition().y <= 0)
+            if (IsKeyPressed('P'))
             {
-                ball.SetSpeed(Vector2{ ball.GetSpeed().x, -ball.GetSpeed().y });
+                pause = !pause;
+            }
+            else if (IsKeyPressed('M'))
+            {
+                sceneManager.SetCurrentState(SceneState::Menu);
             }
 
-            // Ball paddle collision
-            if (CheckCollisionCircleRec(ball.GetPosition(), ball.GetRadius(), leftPaddle.GetPaddleRectangle()) ||
-                CheckCollisionCircleRec(ball.GetPosition(), ball.GetRadius(), rightPaddle.GetPaddleRectangle()))
+            if (!pause)
             {
-                ball.SetSpeed(Vector2{ -ball.GetSpeed().x, ball.GetSpeed().y });
-            }
+                //v Ball =========================================================
+                ball.Update();
 
-            // Ball out of vertical bounds
-            if (ball.GetPosition().x >= SCREEN_WIDTH)
-            {
-				ScoreGoal(true);
-            }
-            else if (ball.GetPosition().x <= 0)
-            {
-				ScoreGoal(false);
-            }
+                // Ball horizontal walls collision
+                if (ball.GetPosition().y >= SCREEN_HEIGHT || ball.GetPosition().y <= 0)
+                {
+                    ball.SetSpeed(Vector2{ ball.GetSpeed().x, -ball.GetSpeed().y });
+                }
 
-            //^ Ball =========================================================
-            //v Paddles ======================================================
-            // Left paddle movement
-            if (IsKeyDown('W'))
-            {
-                leftPaddle.SetSpeed(Vector2{ 0.0f, -PADDLE_MAX_SPEED });
-            }
-            else if (IsKeyDown('S'))
-            {
-                leftPaddle.SetSpeed(Vector2{ 0.0f, PADDLE_MAX_SPEED });
-            }
-            else
-            {
-                leftPaddle.SetSpeed(Vector2{ 0.0f, leftPaddle.GetSpeed().y * PADDLE_DECELERATION_FACTOR });
-            }
+                // Ball paddle collision
+                if (CheckCollisionCircleRec(ball.GetPosition(), ball.GetRadius(), leftPaddle.GetPaddleRectangle()) ||
+                    CheckCollisionCircleRec(ball.GetPosition(), ball.GetRadius(), rightPaddle.GetPaddleRectangle()))
+                {
+                    ball.SetSpeed(Vector2{ -ball.GetSpeed().x, ball.GetSpeed().y });
+                }
 
-            // Left paddle collisions
-            if (leftPaddle.GetPosition().y <= 0)
-            {
-                leftPaddle.SetPosition(Vector2{ leftPaddle.GetPosition().x, 0 });
-            }
-            else if (leftPaddle.GetPosition().y + leftPaddle.GetHeight() >= SCREEN_HEIGHT)
-            {
-                leftPaddle.SetPosition(Vector2{ leftPaddle.GetPosition().x, SCREEN_HEIGHT - leftPaddle.GetHeight() });
-            }
+                // Ball out of vertical bounds
+                if (ball.GetPosition().x >= SCREEN_WIDTH)
+                {
+                    ScoreGoal(true);
+                }
+                else if (ball.GetPosition().x <= 0)
+                {
+                    ScoreGoal(false);
+                }
 
-            leftPaddle.Update();
+                //^ Ball =========================================================
+                //v Paddles ======================================================
+                // Left paddle movement
+                if (IsKeyDown('W'))
+                {
+                    leftPaddle.SetSpeed(Vector2{ 0.0f, -PADDLE_MAX_SPEED });
+                }
+                else if (IsKeyDown('S'))
+                {
+                    leftPaddle.SetSpeed(Vector2{ 0.0f, PADDLE_MAX_SPEED });
+                }
+                else
+                {
+                    leftPaddle.SetSpeed(Vector2{ 0.0f, leftPaddle.GetSpeed().y * PADDLE_DECELERATION_FACTOR });
+                }
 
-            // Right paddle movement
-            if (IsKeyDown(KEY_UP))
-            {
-                rightPaddle.SetSpeed(Vector2{ 0.0f, -PADDLE_MAX_SPEED });
-            }
-            else if (IsKeyDown(KEY_DOWN))
-            {
-                rightPaddle.SetSpeed(Vector2{ 0.0f, PADDLE_MAX_SPEED });
-            }
-            else
-            {
-                rightPaddle.SetSpeed(Vector2{ 0.0f, rightPaddle.GetSpeed().y * PADDLE_DECELERATION_FACTOR });
-            }
+                // Left paddle collisions
+                if (leftPaddle.GetPosition().y <= 0)
+                {
+                    leftPaddle.SetPosition(Vector2{ leftPaddle.GetPosition().x, 0 });
+                }
+                else if (leftPaddle.GetPosition().y + leftPaddle.GetHeight() >= SCREEN_HEIGHT)
+                {
+                    leftPaddle.SetPosition(Vector2{ leftPaddle.GetPosition().x, SCREEN_HEIGHT - leftPaddle.GetHeight() });
+                }
 
-            // Right paddle collisions
-            if (rightPaddle.GetPosition().y <= 0)
-            {
-                rightPaddle.SetPosition(Vector2{ rightPaddle.GetPosition().x, 0 });
-            }
-            else if (rightPaddle.GetPosition().y + rightPaddle.GetHeight() >= SCREEN_HEIGHT)
-            {
-                rightPaddle.SetPosition(Vector2{ rightPaddle.GetPosition().x, SCREEN_HEIGHT - rightPaddle.GetHeight() });
-            }
+                leftPaddle.Update();
 
-            rightPaddle.Update();
+                // Right paddle movement
+                if (IsKeyDown(KEY_UP))
+                {
+                    rightPaddle.SetSpeed(Vector2{ 0.0f, -PADDLE_MAX_SPEED });
+                }
+                else if (IsKeyDown(KEY_DOWN))
+                {
+                    rightPaddle.SetSpeed(Vector2{ 0.0f, PADDLE_MAX_SPEED });
+                }
+                else
+                {
+                    rightPaddle.SetSpeed(Vector2{ 0.0f, rightPaddle.GetSpeed().y * PADDLE_DECELERATION_FACTOR });
+                }
 
-            //^ Paddles ======================================================
+                // Right paddle collisions
+                if (rightPaddle.GetPosition().y <= 0)
+                {
+                    rightPaddle.SetPosition(Vector2{ rightPaddle.GetPosition().x, 0 });
+                }
+                else if (rightPaddle.GetPosition().y + rightPaddle.GetHeight() >= SCREEN_HEIGHT)
+                {
+                    rightPaddle.SetPosition(Vector2{ rightPaddle.GetPosition().x, SCREEN_HEIGHT - rightPaddle.GetHeight() });
+                }
+
+                rightPaddle.Update();
+
+                //^ Paddles ======================================================
+            }
+            break;
+        }
+        case SceneState::Score:
+        {
+            if (IsKeyPressed('M'))
+            {
+                sceneManager.SetCurrentState(SceneState::Menu);
+            }
+            else if (IsKeyPressed(KEY_ENTER) || IsKeyPressed(KEY_SPACE))
+            {
+                ResetGame();
+                sceneManager.SetCurrentState(SceneState::TwoPlayersGamemode);
+            }
+            break;
         }
     }
-	else if (sceneManager.GetCurrentState() == SceneState::Score)
-	{
-        if (IsKeyPressed('M'))
-		{
-			sceneManager.SetCurrentState(SceneState::Menu);
-		}
-        else if (IsKeyPressed(KEY_ENTER) || IsKeyPressed(KEY_SPACE))
-        {
-			ResetGame();
-            sceneManager.SetCurrentState(SceneState::TwoPlayersGamemode);
-        }
-	}
 }
 
 void DrawBackgroundUI()
 {
-    if (sceneManager.GetCurrentState() == SceneState::Menu)
+    switch (sceneManager.GetCurrentState())
     {
-        const float screenVerticalMiddle = SCREEN_HEIGHT / 2.0f;
+	    case SceneState::Menu:
+	    {
+            const float screenVerticalMiddle = SCREEN_HEIGHT / 2.0f;
 
-        Utils::DrawCenteredText("PONG", Vector2{ SCREEN_WIDTH / 2.0f, screenVerticalMiddle - 100.0f }, 50, WHITE);
-        Utils::DrawCenteredText("Press Enter to start", Vector2{ SCREEN_WIDTH / 2.0f, screenVerticalMiddle }, 20, WHITE);
-    }
-    else if (sceneManager.GetCurrentState() == SceneState::TwoPlayersGamemode)
-    {
-        const float textOffset = 50.0f;
+            Utils::DrawCenteredText("PONG", Vector2{ SCREEN_WIDTH / 2.0f, screenVerticalMiddle - 100.0f }, 50, WHITE);
+            Utils::DrawCenteredText("Press Enter to start", Vector2{ SCREEN_WIDTH / 2.0f, screenVerticalMiddle }, 20, WHITE);
 
-        Utils::DrawCenteredTextEx(font, TextFormat("%i", leftScore), Vector2{ SCREEN_WIDTH / 2.0f - textOffset, 50.0f }, SCORE_TEXT_SIZE, 0.0f, WHITE);
-        Utils::DrawCenteredTextEx(font, TextFormat("%i", rightScore), Vector2{ SCREEN_WIDTH / 2.0f + textOffset, 50.0f }, SCORE_TEXT_SIZE, 0.0f, WHITE);
-    }
-    else if (sceneManager.GetCurrentState() == SceneState::Score)
-    {
-        const float screenVerticalMiddle = SCREEN_HEIGHT / 2.0f;
-        const float textOffset = 50.0f;
+		    break;
+	    }
+		case SceneState::TwoPlayersGamemode:
+		{
+            const float textOffset = 50.0f;
 
-        Utils::DrawCenteredTextEx(font, TextFormat("%i", leftScore), Vector2{ SCREEN_WIDTH / 2.0f - textOffset, 50.0f }, SCORE_TEXT_SIZE, 0.0f, WHITE);
-        Utils::DrawCenteredTextEx(font, TextFormat("%i", rightScore), Vector2{ SCREEN_WIDTH / 2.0f + textOffset, 50.0f }, SCORE_TEXT_SIZE, 0.0f, WHITE);
+            Utils::DrawCenteredTextEx(font, TextFormat("%i", leftScore), Vector2{ SCREEN_WIDTH / 2.0f - textOffset, 50.0f }, SCORE_TEXT_SIZE, 0.0f, WHITE);
+            Utils::DrawCenteredTextEx(font, TextFormat("%i", rightScore), Vector2{ SCREEN_WIDTH / 2.0f + textOffset, 50.0f }, SCORE_TEXT_SIZE, 0.0f, WHITE);
 
-		const char* winnerText = leftScore >= WINNING_SCORE ? "Left player wins!" : "Right player wins!";
+			break;
+		}
+		case SceneState::Score:
+        {
+            const float screenVerticalMiddle = SCREEN_HEIGHT / 2.0f;
+            const float textOffset = 50.0f;
 
-        Utils::DrawCenteredText(winnerText, Vector2{ SCREEN_WIDTH / 2.0f, screenVerticalMiddle }, 40, WHITE);
+            Utils::DrawCenteredTextEx(font, TextFormat("%i", leftScore), Vector2{ SCREEN_WIDTH / 2.0f - textOffset, 50.0f }, SCORE_TEXT_SIZE, 0.0f, WHITE);
+            Utils::DrawCenteredTextEx(font, TextFormat("%i", rightScore), Vector2{ SCREEN_WIDTH / 2.0f + textOffset, 50.0f }, SCORE_TEXT_SIZE, 0.0f, WHITE);
 
-        Utils::DrawCenteredText("Press Enter/Space to restart", Vector2{ SCREEN_WIDTH / 2.0f, screenVerticalMiddle + 100.0f }, 20, WHITE);
-        Utils::DrawCenteredText("Press M to go back to the main menu", Vector2{ SCREEN_WIDTH / 2.0f, screenVerticalMiddle + 125.0f }, 20, WHITE);
+            const char* winnerText = leftScore >= WINNING_SCORE ? "Left player wins!" : "Right player wins!";
+
+            Utils::DrawCenteredText(winnerText, Vector2{ SCREEN_WIDTH / 2.0f, screenVerticalMiddle }, 40, WHITE);
+
+            Utils::DrawCenteredText("Press Enter/Space to restart", Vector2{ SCREEN_WIDTH / 2.0f, screenVerticalMiddle + 100.0f }, 20, WHITE);
+            Utils::DrawCenteredText("Press M to go back to the main menu", Vector2{ SCREEN_WIDTH / 2.0f, screenVerticalMiddle + 125.0f }, 20, WHITE);
+
+			break;
+        }
     }
 }
 
 void Draw()
 {
-	if (sceneManager.GetCurrentState() == SceneState::TwoPlayersGamemode)
+    switch (sceneManager.GetCurrentState())
     {
-        // Draw middle separator
-        DrawRectangle(SCREEN_WIDTH / 2.0f, 0, 2, SCREEN_HEIGHT, WHITE);
+        case SceneState::TwoPlayersGamemode:
+        {
+            // Draw middle separator
+            DrawRectangle(SCREEN_WIDTH / 2.0f, 0, 2, SCREEN_HEIGHT, WHITE);
 
-        ball.Draw();
+            ball.Draw();
 
-        leftPaddle.Draw();
-        rightPaddle.Draw();
+            leftPaddle.Draw();
+            rightPaddle.Draw();
+
+            break;
+        }
     }
 }
 
