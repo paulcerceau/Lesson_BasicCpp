@@ -3,15 +3,22 @@
 
 class Paddle;
 
+struct BallSounds
+{
+	Sound wallHit;
+	Sound paddleHit;
+	Sound goal;
+};
+
 class Ball : public BaseObject
 {
 public:
 	Ball();
 	~Ball() override;
 
-	void Load() override;
-
 	void Init();
+
+	void SetSounds(const BallSounds& sounds);
 
 	void HandlePaddleCollision(const Paddle& paddle, bool bIsLeftPaddle);
 
@@ -19,12 +26,12 @@ public:
 
 	void Draw() const override;
 
-	void Unload() override;
-
 	float GetRadius() const;
 
 	float GetDirectionAngleRad() const;
 	void SetDirectionAngleRad(float angle);
+
+	void PlayGoalSound(bool bHasLeftScored) const;
 
 protected:
 	float mRadius;
@@ -32,5 +39,9 @@ protected:
 
 	Vector2 mSpeed;
 	float mRadDirectionAngle;
+
+	Sound mWallHitSound;
+	Sound mPaddleHitSound;
+	Sound mGoalSound;
 
 };

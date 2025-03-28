@@ -10,16 +10,14 @@ Ball::Ball() :
 	mRadius{ 10.0f },
 	mColor{ BLUE },
 	mSpeed{ 0.0f, 0.0f },
-	mRadDirectionAngle{ 0.0f }
+	mRadDirectionAngle{ 0.0f },
+	mWallHitSound{ 0 },
+	mPaddleHitSound{ 0 },
+	mGoalSound{ 0 }
 {
 }
 
 Ball::~Ball()
-{
-	Unload();
-}
-
-void Ball::Load()
 {
 }
 
@@ -31,6 +29,13 @@ void Ball::Init()
 	
 	mRadDirectionAngle = PI / 4.0f;
 	mSpeed = Vector2{ Consts::Ball::BASE_SPEED * std::cos(mRadDirectionAngle), Consts::Ball::BASE_SPEED * std::sin(mRadDirectionAngle) };
+}
+
+void Ball::SetSounds(const BallSounds& sounds)
+{
+	mWallHitSound = sounds.wallHit;
+	mPaddleHitSound = sounds.paddleHit;
+	mGoalSound = sounds.goal;
 }
 
 void Ball::HandlePaddleCollision(const Paddle& paddle, bool bIsLeftPaddle)
@@ -46,9 +51,16 @@ void Ball::HandlePaddleCollision(const Paddle& paddle, bool bIsLeftPaddle)
 		if (!bIsLeftPaddle)
 		{
 			newDirectionAngle = PI - newDirectionAngle;
+			SetSoundPan(mPaddleHitSound, 0.25f);
+		}
+		else
+		{
+			SetSoundPan(mPaddleHitSound, 0.75f);
 		}
 
 		SetDirectionAngleRad(newDirectionAngle);
+
+		PlaySound(mPaddleHitSound);
 	}
 }
 
@@ -67,6 +79,8 @@ void Ball::Update()
 	// Horizontal walls collision and avoid jittering when the ball was parallel to walls
 	if (mPosition.y >= Consts::Window::HEIGHT - mRadius)
 	{
+		PlaySound(mWallHitSound);
+
 		mPosition.y = Consts::Window::HEIGHT - mRadius;
 		mRadDirectionAngle = -mRadDirectionAngle;
 
@@ -77,6 +91,8 @@ void Ball::Update()
 	}
 	else if (mPosition.y <= mRadius)
 	{
+		PlaySound(mWallHitSound);
+
 		mPosition.y = mRadius;
 		mRadDirectionAngle = -mRadDirectionAngle;
 
@@ -92,10 +108,6 @@ void Ball::Draw() const
 	DrawCircle(mPosition.x, mPosition.y, mRadius, mColor);
 }
 
-void Ball::Unload()
-{
-}
-
 float Ball::GetRadius() const
 {
 	return mRadius;
@@ -109,4 +121,11 @@ float Ball::GetDirectionAngleRad() const
 void Ball::SetDirectionAngleRad(float angle)
 {
 	mRadDirectionAngle = angle;
+}
+
+void Ball::PlayGoalSound(bool bHasLeftScored) const
+{
+	bHasLeftScored ? SetSoundPan(mGoalSound, 0.25f) : SetSoundPan(mGoalSound, 0.75f);
+
+	PlaySound(mGoalSound);
 }

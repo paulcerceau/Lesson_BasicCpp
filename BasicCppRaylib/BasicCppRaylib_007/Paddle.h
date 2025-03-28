@@ -13,8 +13,6 @@ public:
 	Paddle();
 	~Paddle() override;
 
-	void Load() override;
-
 	void Init(Vector2 position, Vector2 speed, PaddleInputs inputs);
 
 	inline void SetInputs(PaddleInputs inputs) { mInputs = inputs; }
@@ -23,8 +21,6 @@ public:
 	void Update();
 
 	void Draw() const;
-
-	void Unload() override;
 
 	Rectangle GetPaddleRectangle() const;
 	float GetWidth() const;

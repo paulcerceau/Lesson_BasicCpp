@@ -20,6 +20,12 @@ Font font = { 0 };
 
 Music music = { 0 };
 
+Sound menuConfirm = { 0 };
+Sound menuPause = { 0 };
+Sound ballWallHitSound = { 0 };
+Sound ballPaddleHitSound = { 0 };
+Sound ballGoalSound = { 0 };
+
 SceneManager sceneManager;
 
 bool gameOver = false;
@@ -100,6 +106,14 @@ void InitGame()
 	music = LoadMusicStream("../resources/audio/A_Worthy_Challenge.wav");
 
 	PlayMusicStream(music);
+	SetMusicVolume(music, 0.25f);
+
+	menuConfirm = LoadSound("../resources/audio/menu_Confirm.wav");
+	SetSoundVolume(menuConfirm, 0.5f);
+	menuPause = LoadSound("../resources/audio/menu_Pause.wav");
+    ballWallHitSound = LoadSound("../resources/audio/ball_WallHit.wav");
+    ballPaddleHitSound = LoadSound("../resources/audio/ball_PaddleHit.wav");
+    ballGoalSound = LoadSound("../resources/audio/ball_Goal.wav");
 
     ResetGame();
 }
@@ -108,6 +122,7 @@ void ResetGame()
 {
     // -- BALL --
     ball.Init();
+	ball.SetSounds(BallSounds{ ballWallHitSound, ballPaddleHitSound, ballGoalSound });
 
     // -- PADDLES --
     Vector2 leftPaddlePosition{ 10.0f, 10.0f };
@@ -156,6 +171,7 @@ void Update()
         {
             if (IsKeyPressed(KEY_ENTER))
             {
+				PlaySound(menuConfirm);
                 ResetGame();
                 sceneManager.SetCurrentState(SceneState::TwoPlayersGamemode);
             }
@@ -166,12 +182,15 @@ void Update()
         {
             if (IsKeyPressed('P'))
             {
+				PlaySound(menuPause);
+
                 pause = !pause;
 
 				pause ? PauseMusicStream(music) : ResumeMusicStream(music);
             }
             else if (IsKeyPressed('M'))
             {
+                PlaySound(menuConfirm);
                 sceneManager.SetCurrentState(SceneState::Menu);
             }
 
@@ -210,10 +229,12 @@ void Update()
         {
             if (IsKeyPressed('M'))
             {
+                PlaySound(menuConfirm);
                 sceneManager.SetCurrentState(SceneState::Menu);
             }
             else if (IsKeyPressed(KEY_ENTER) || IsKeyPressed(KEY_SPACE))
             {
+                PlaySound(menuConfirm);
                 ResetGame();
                 sceneManager.SetCurrentState(SceneState::TwoPlayersGamemode);
             }
@@ -286,8 +307,16 @@ void Draw()
 
 void Unload()
 {
+	// -- AUDIO --
 	UnloadFont(font);
 	UnloadMusicStream(music);
+
+	UnloadSound(menuConfirm);
+	UnloadSound(menuPause);
+	UnloadSound(ballWallHitSound);
+	UnloadSound(ballPaddleHitSound);
+	UnloadSound(ballGoalSound);
+
 }
 
 //----------------------------------------------------------------------------------
@@ -299,6 +328,8 @@ void ScoreGoal(bool scoredByLeft)
     if (scoredByLeft)
     {
         leftScore++;
+
+		ball.PlayGoalSound(scoredByLeft);
 
         // Reset ball
         ball.SetPosition(Vector2{ Consts::Window::WIDTH / 2.0f - Consts::Ball::X_OFFSET, Consts::Window::HEIGHT / 2.0f });
@@ -312,6 +343,8 @@ void ScoreGoal(bool scoredByLeft)
     else
     {
         rightScore++;
+
+		ball.PlayGoalSound(scoredByLeft);
 
         // Reset ball
         ball.SetPosition(Vector2{ Consts::Window::WIDTH / 2.0f + Consts::Ball::X_OFFSET, Consts::Window::HEIGHT / 2.0f });

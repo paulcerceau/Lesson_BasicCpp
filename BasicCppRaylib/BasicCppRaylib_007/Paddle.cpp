@@ -17,12 +17,6 @@ Paddle::Paddle() :
 
 Paddle::~Paddle()
 {
-	Unload();
-}
-
-void Paddle::Load()
-{
-	
 }
 
 void Paddle::Init(Vector2 position, Vector2 speed, PaddleInputs inputs)
@@ -85,11 +79,6 @@ void Paddle::Update()
 void Paddle::Draw() const
 {
 	DrawRectangle(mPosition.x, mPosition.y, mWidth, mHeight, mColor);
-}
-
-void Paddle::Unload()
-{
-
 }
 
 Rectangle Paddle::GetPaddleRectangle() const
