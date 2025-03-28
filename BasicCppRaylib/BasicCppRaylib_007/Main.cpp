@@ -16,8 +16,10 @@ using std::vector;
 // Variables Declaration
 //----------------------------------------------------------------------------------
 
+// -- FONTS --
 Font font = { 0 };
 
+// -- AUDIO --
 Music music = { 0 };
 
 Sound menuConfirm = { 0 };
@@ -26,15 +28,23 @@ Sound ballWallHitSound = { 0 };
 Sound ballPaddleHitSound = { 0 };
 Sound ballGoalSound = { 0 };
 
+// -- TEXTURES --
+Texture2D leftPaddeTexture = { 0 };
+Texture2D rightPaddleTexture = { 0 };
+Texture2D ballTexture = { 0 };
+
+// -- GAME STATES --
 SceneManager sceneManager;
 
 bool gameOver = false;
 bool pause = false;
 
+// -- GAME OBJECTS --
 Ball ball;
 Paddle leftPaddle;
 Paddle rightPaddle;
 
+// -- SCORES --
 int leftScore = 0;
 int rightScore = 0;
 
@@ -115,6 +125,11 @@ void InitGame()
     ballPaddleHitSound = LoadSound("../resources/audio/ball_PaddleHit.wav");
     ballGoalSound = LoadSound("../resources/audio/ball_Goal.wav");
 
+	// -- TEXTURES --
+	leftPaddeTexture = LoadTexture("../resources/textures/leftPaddle.png");
+	rightPaddleTexture = LoadTexture("../resources/textures/rightPaddle.png");
+	ballTexture = LoadTexture("../resources/textures/ball.png");
+
     ResetGame();
 }
 
@@ -122,6 +137,7 @@ void ResetGame()
 {
     // -- BALL --
     ball.Init();
+	ball.SetTexture(&ballTexture);
 	ball.SetSounds(BallSounds{ ballWallHitSound, ballPaddleHitSound, ballGoalSound });
 
     // -- PADDLES --
@@ -130,12 +146,14 @@ void ResetGame()
 	PaddleInputs leftPaddleInputs{ 'W', 'S' };
 
     leftPaddle.Init(leftPaddlePosition, leftPaddleSpeed, leftPaddleInputs);
+	leftPaddle.SetTexture(&leftPaddeTexture);
 
     Vector2 rightpaddlePosition{ Consts::Window::WIDTH - (10.0f + Consts::Paddle::BASE_WIDTH), 10.0f };
     Vector2 rightpaddleSpeed{ 0.0f, 0.0f };
 	PaddleInputs rightPaddleInputs{ KEY_UP, KEY_DOWN };
 
     rightPaddle.Init(rightpaddlePosition, rightpaddleSpeed, rightPaddleInputs);
+	rightPaddle.SetTexture(&rightPaddleTexture);
 
     // -- SCORES --
     leftScore = 0;
@@ -316,6 +334,11 @@ void Unload()
 	UnloadSound(ballWallHitSound);
 	UnloadSound(ballPaddleHitSound);
 	UnloadSound(ballGoalSound);
+
+	// -- TEXTURES --
+	UnloadTexture(leftPaddeTexture);
+	UnloadTexture(rightPaddleTexture);
+    UnloadTexture(ballTexture);
 
 }
 

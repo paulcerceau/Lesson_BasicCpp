@@ -78,7 +78,7 @@ void Paddle::Update()
 
 void Paddle::Draw() const
 {
-	DrawRectangle(mPosition.x, mPosition.y, mWidth, mHeight, mColor);
+	DrawTexture(*mMainTexture, mPosition.x, mPosition.y, WHITE);
 }
 
 Rectangle Paddle::GetPaddleRectangle() const

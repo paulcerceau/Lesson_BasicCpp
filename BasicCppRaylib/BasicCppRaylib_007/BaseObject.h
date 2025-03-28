@@ -14,10 +14,12 @@ public:
 	inline Vector2 GetPosition() const { return mPosition; }
 	inline void SetPosition(Vector2 position) { mPosition = position; }
 
+	void SetTexture(Texture* texture) { mMainTexture = texture; }
+
 protected:
 	Vector2 mPosition;
 
-	Texture* mTexture;
+	Texture* mMainTexture;
 
 };
 

@@ -19,7 +19,7 @@ namespace Consts
 		const float RADIUS{ 10.0f };
 		const unsigned char COLOR[4]{ 0, 121, 241, 255 };
 		const float X_OFFSET{ 200.0f }; 
-		const float BASE_SPEED{ 6.0f }; 
+		const float BASE_SPEED{ 8.0f }; 
 	}
 
 	namespace Paddle

@@ -105,7 +105,7 @@ void Ball::Update()
 
 void Ball::Draw() const
 {
-	DrawCircle(mPosition.x, mPosition.y, mRadius, mColor);
+	DrawTexture(*mMainTexture, mPosition.x - mRadius, mPosition.y - mRadius, WHITE);
 }
 
 float Ball::GetRadius() const
