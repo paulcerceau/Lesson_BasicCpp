@@ -138,19 +138,19 @@ void ResetGame()
     // -- BALL --
     ball.Init();
 	ball.SetTexture(&ballTexture);
-	ball.SetSounds(BallSounds{ ballWallHitSound, ballPaddleHitSound, ballGoalSound });
+	ball.SetSounds(BallSounds{ &ballWallHitSound, &ballPaddleHitSound, &ballGoalSound });
 
     // -- PADDLES --
-    Vector2 leftPaddlePosition{ 10.0f, 10.0f };
-    Vector2 leftPaddleSpeed{ 0.0f, 0.0f };
-	PaddleInputs leftPaddleInputs{ 'W', 'S' };
+    const Vector2 leftPaddlePosition{ 10.0f, 10.0f };
+    const Vector2 leftPaddleSpeed{ 0.0f, 0.0f };
+	const PaddleInputs leftPaddleInputs{ 'W', 'S' };
 
     leftPaddle.Init(leftPaddlePosition, leftPaddleSpeed, leftPaddleInputs);
 	leftPaddle.SetTexture(&leftPaddeTexture);
 
-    Vector2 rightpaddlePosition{ Consts::Window::WIDTH - (10.0f + Consts::Paddle::BASE_WIDTH), 10.0f };
-    Vector2 rightpaddleSpeed{ 0.0f, 0.0f };
-	PaddleInputs rightPaddleInputs{ KEY_UP, KEY_DOWN };
+    const Vector2 rightpaddlePosition{ Consts::Window::WIDTH - (10.0f + Consts::Paddle::BASE_WIDTH), 10.0f };
+    const Vector2 rightpaddleSpeed{ 0.0f, 0.0f };
+    const PaddleInputs rightPaddleInputs{ KEY_UP, KEY_DOWN };
 
     rightPaddle.Init(rightpaddlePosition, rightpaddleSpeed, rightPaddleInputs);
 	rightPaddle.SetTexture(&rightPaddleTexture);

@@ -5,9 +5,9 @@ class Paddle;
 
 struct BallSounds
 {
-	Sound wallHit;
-	Sound paddleHit;
-	Sound goal;
+	Sound* wallHit;
+	Sound* paddleHit;
+	Sound* goal;
 };
 
 class Ball : public BaseObject
@@ -40,8 +40,8 @@ protected:
 	Vector2 mSpeed;
 	float mRadDirectionAngle;
 
-	Sound mWallHitSound;
-	Sound mPaddleHitSound;
-	Sound mGoalSound;
+	Sound* mWallHitSound;
+	Sound* mPaddleHitSound;
+	Sound* mGoalSound;
 
 };

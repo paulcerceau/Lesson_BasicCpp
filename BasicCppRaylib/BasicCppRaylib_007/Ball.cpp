@@ -42,25 +42,25 @@ void Ball::HandlePaddleCollision(const Paddle& paddle, bool bIsLeftPaddle)
 {
 	if (CheckCollisionCircleRec(GetPosition(), GetRadius(), paddle.GetPaddleRectangle()))
 	{
-		float paddleMiddleY = paddle.GetPosition().y + paddle.GetHeight() / 2.0f;
-		float collisionPointY = GetPosition().y;
-		float relativeCollisionY = (collisionPointY - paddleMiddleY) / (paddle.GetHeight() / 2.0f);
+		const float paddleMiddleY = paddle.GetPosition().y + paddle.GetHeight() / 2.0f;
+		const float collisionPointY = GetPosition().y;
+		const float relativeCollisionY = (collisionPointY - paddleMiddleY) / (paddle.GetHeight() / 2.0f);
 
 		float newDirectionAngle = relativeCollisionY * (50.0f * (PI / 180.0f));
 
 		if (!bIsLeftPaddle)
 		{
 			newDirectionAngle = PI - newDirectionAngle;
-			SetSoundPan(mPaddleHitSound, 0.25f);
+			SetSoundPan(*mPaddleHitSound, 0.25f);
 		}
 		else
 		{
-			SetSoundPan(mPaddleHitSound, 0.75f);
+			SetSoundPan(*mPaddleHitSound, 0.75f);
 		}
 
 		SetDirectionAngleRad(newDirectionAngle);
 
-		PlaySound(mPaddleHitSound);
+		PlaySound(*mPaddleHitSound);
 	}
 }
 
@@ -79,7 +79,7 @@ void Ball::Update()
 	// Horizontal walls collision and avoid jittering when the ball was parallel to walls
 	if (mPosition.y >= Consts::Window::HEIGHT - mRadius)
 	{
-		PlaySound(mWallHitSound);
+		PlaySound(*mWallHitSound);
 
 		mPosition.y = Consts::Window::HEIGHT - mRadius;
 		mRadDirectionAngle = -mRadDirectionAngle;
@@ -91,7 +91,7 @@ void Ball::Update()
 	}
 	else if (mPosition.y <= mRadius)
 	{
-		PlaySound(mWallHitSound);
+		PlaySound(*mWallHitSound);
 
 		mPosition.y = mRadius;
 		mRadDirectionAngle = -mRadDirectionAngle;
@@ -125,7 +125,7 @@ void Ball::SetDirectionAngleRad(float angle)
 
 void Ball::PlayGoalSound(bool bHasLeftScored) const
 {
-	bHasLeftScored ? SetSoundPan(mGoalSound, 0.25f) : SetSoundPan(mGoalSound, 0.75f);
+	bHasLeftScored ? SetSoundPan(*mGoalSound, 0.25f) : SetSoundPan(*mGoalSound, 0.75f);
 
-	PlaySound(mGoalSound);
+	PlaySound(*mGoalSound);
 }
